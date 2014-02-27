@@ -1,0 +1,24 @@
+<class name="scom:Article" uri="http://rdf.onekin.org/arxiv.search/article/{id}">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
+    <sampleURI> http://rdf.onekin.org/arxiv.search/article/0706.1234v1</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="arxiv" odtLocation="https://dl.dropboxusercontent.com/u/8640666/arxiv.xml" itemPath="/query/results/entry" inputKey="id_list"/>
+       <outputs>
+          <key id="dc:description" template="[summary]"/>
+          <key id="dc:title" template="[title]"/>
+          <key id="dc:format" template="Digital document"/>
+          <key id="dc:author" template="http://data.semanticweb.org/person/{underscore([author])}" />
+	  <key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+       </outputs>
+   </bindings>
+   <function selector="underscore" param="author">
+        return author.toLowerCase().replace(' ','_');
+    </function>
+   <function selector="hello2" param="b">
+        return 'Hello-'+b;
+    </function>
+</class>
