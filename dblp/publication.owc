@@ -1,0 +1,28 @@
+<class name="scom:Publication" uri="http://rdf.onekin.org/dblp/publication/{id}">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI> http://rdf.onekin.org/dblp/publication/http://www.dblp.org/rec/bibtex/conf/jisbd/IturriozDA09</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpPublication.xml" itemPath="/query/results/dblp/inproceedings/" inputKey="key" />
+       <outputs>
+         <key id="dc:title" template="[title]" />
+         <key id="dc:date" template="[date]" />
+	 <key id="dc:pages" template="[pages]" />
+	 <key id="dc:year" template="[year]" />
+
+	 <key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+       </outputs>
+   </bindings>
+   <function selector="hello" param="a">
+        return 'Hello-'+a;
+    </function>
+   <function selector="hello2" param="b">
+        return b;
+    </function>
+    <function selector="underscore" param="author">
+        return author.toLowerCase().split(' ').join('_')
+    </function>
+</class>
