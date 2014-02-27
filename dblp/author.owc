@@ -1,0 +1,20 @@
+<class name="scom:Author" uri="http://rdf.onekin.org/arxiv.search/article/{id}">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
+    <sampleURI> http://rdf.onekin.org/dblp/author/jon_iturrioz</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" inputKey="q" pre="ce:author:"/>
+       <outputs>
+	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
+       </outputs>
+   </bindings>
+   <function selector="hello" param="a">
+        return 'Hello-'+a;
+    </function>
+   <function selector="hello2" param="b">
+        return b+".xml";
+    </function>
+</class>
