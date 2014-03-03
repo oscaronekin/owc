@@ -1,0 +1,21 @@
+<class name="scom:Book" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
+    <sampleURI>http://rdf.onekin.org/arxiv/article/cs/9901002v1</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="isbnDb" odtLocation="https://dl.dropboxusercontent.com/u/8640666/isbnDb.xml" itemPath="/query/results/BookData" inputKey="value1"/>
+       <outputs>
+          <key id="dc:title" template="[Title]"/>
+          <key id="dc:publisher" template="[PublisherText]"/>
+       </outputs>
+   </bindings>
+   <function selector="underscore" param="author">
+        return author.toLowerCase().replace(' ','_');
+    </function>
+   <function selector="hello2" param="b">
+        return 'Hello-'+b;
+    </function>
+</class>
