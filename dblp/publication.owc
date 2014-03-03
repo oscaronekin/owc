@@ -1,26 +1,25 @@
-<class name="scom:Publication" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<class name="scom:Publication" uri="http://rdf.onekin.org/dblp/publication/{id}">
 <meta>
     <author>Jon Iturrioz</author>
     <documentationURL></documentationURL>
     <sampleURI> http://rdf.onekin.org/dblp/publication/http://www.dblp.org/rec/bibtex/conf/jisbd/IturriozDA09</sampleURI>
   </meta>
-	
-   <bindings>	 
+
+   <bindings>
        <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpPublication.xml" itemPath="/query/results/dblp/*[1]/" inputKey="key" />
        <outputs>
          <key id="dc:title" template="[title]" />
          <key id="dc:date" template="[date]" />
-	 <key id="dc:pages" template="[pages]" />
-	 <key id="dc:year" template="[year]" />
+<key id="dc:pages" template="[pages]" />
+<key id="dc:year" template="[year]" />
 
-	 <key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
-	<key id="dc:proceedings" template="http://rdf.onekin.org/dblp/proc/{same([crossref])}" />
+<key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
        </outputs>
    </bindings>
    <function selector="hello" param="a">
         return 'Hello-'+a;
     </function>
-   <function selector="same" param="b">
+   <function selector="hello2" param="b">
         return b;
     </function>
     <function selector="underscore" param="author">
