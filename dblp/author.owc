@@ -1,4 +1,4 @@
-<class name="scom:Author" uri="http://rdf.onekin.org/arxiv.search/article/{id}">	
+<class name="scom:Author" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
 <meta>
     <author>Jon Iturrioz</author>
     <documentationURL>http://arxiv.org/help/api/index</documentationURL>
@@ -15,6 +15,6 @@
         return 'Hello-'+a;
     </function>
    <function selector="hello2" param="b">
-        return b+".xml";
+        return b.substr('http://www.dblp.org/rec/bibtex/'.length);
     </function>
 </class>
