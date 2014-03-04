@@ -1,8 +1,8 @@
 <class name="scom:Book" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
 <meta>
     <author>Jon Iturrioz</author>
-    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
-    <sampleURI>http://rdf.onekin.org/arxiv/article/cs/9901002v1</sampleURI>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/isbndb/book/1558607781</sampleURI>
   </meta>
 	
    <bindings>	 
