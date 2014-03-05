@@ -1,0 +1,18 @@
+<class name="scom:Place" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/geo/place/766273</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="geo.places" itemPath="/query/results/place" inputKey="woeid"/>
+       <outputs>
+          <key id="dc:name" template="[name]"/>
+          <key id="dc:woeid" template="[woeid]"/>
+          <key id="dc:country" template="[country]"/>
+          <key id="dc:latitude" template="[centroid/latitude]"/>
+          <key id="dc:longitude" template="[centroid/longitude]"/>
+       </outputs>
+   </bindings>
+</class>
