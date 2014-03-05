@@ -14,5 +14,8 @@
           <key id="dc:woe_id" template="http://rdf.onekin.org/geo/place/{same([@woeid])}"/>
        </outputs>
    </bindings>
+   <function selector="same" param="b">
+        return b;
+    </function>
    
 </class>
