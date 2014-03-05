@@ -11,9 +11,7 @@
           <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
        </inputs>
        <outputs>
-          <key id="dc:woe_name" template="[@woe_name]"/>
-          <key id="dc:woe_id" template="[@woeid]"/>
-          <key id="dc:place" template="[.]"/>
+          <key id="dc:woe_id" template="http://rdf.onekin.org/geoplanet/place/[@woeid]"/>
        </outputs>
    </bindings>
 </class>
