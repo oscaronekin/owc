@@ -11,7 +11,8 @@
           <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
        </inputs>
        <outputs>
-          <key id="dc:woe_id" template="http://rdf.onekin.org/geo/place/[@woeid]"/>
+          <key id="dc:woe_id" template="http://rdf.onekin.org/geo/place/{same([@woeid])}"/>
        </outputs>
    </bindings>
+   
 </class>
