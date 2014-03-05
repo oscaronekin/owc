@@ -1,0 +1,19 @@
+<class name="scom:Place" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/flickr/place/madrid</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="flickr.places" itemPath="/query/results/place" inputKey="query"/>
+       <inputs>
+          <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
+       </inputs>
+       <outputs>
+          <key id="dc:woe_name" template="[@woe_name]"/>
+          <key id="dc:woe_id" template="[@woe_id]"/>
+          <key id="dc:place" template="[place]"/>
+       </outputs>
+   </bindings>
+</class>
