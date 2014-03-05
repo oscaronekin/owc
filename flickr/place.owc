@@ -12,8 +12,8 @@
        </inputs>
        <outputs>
           <key id="dc:woe_name" template="[@woe_name]"/>
-          <key id="dc:woe_id" template="[@woe_id]"/>
-          <key id="dc:place" template="[place]"/>
+          <key id="dc:woe_id" template="[@woeid]"/>
+          <key id="dc:place" template="[.]"/>
        </outputs>
    </bindings>
 </class>
