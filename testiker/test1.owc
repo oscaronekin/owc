@@ -14,7 +14,7 @@
 </inputs>
 
 <outputs>
-     	     <key id="location" template="[location]"/>
+     	     <key id="location" template="location"/>
 </outputs>
 
 </bindings>
