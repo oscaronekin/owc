@@ -2,14 +2,23 @@
 <meta>  
   <author>Iker Azpeitia <author>  
   <documentationURL> </documentationURL>  
-  <sampleURI>http://rdf.onekin.org/testiker/test1<sampleQuery>  
+  <sampleURI>http://rdf.onekin.org/lastfm.geo.getevents/test1<sampleQuery>  
 </meta>  
 
 <binding>
-<table odtTable="testiker" odtLocation="https://dl.dropboxusercontent.com/u/8640666/arxiv.xml" itemPath="/query/results/entry" inputKey="id_list"/>
+<table odtTable="lastfm.geo.getevents" odtLocation="http://www.datatables.org/lastfm/lastfm.geo.getevents.xml" itemPath="events.event" inputKey=""/>
+
 <inputs>
+       	   <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
+</inputs>
+
 <outputs>
+     	     <key id="id" template="[id]"/>
+</outputs>
+
 </bindings>
 
-
+<function selector="hello" param="b">
+return 'Hello-'+b;
+</function>
 <class>
