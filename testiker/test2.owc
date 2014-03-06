@@ -18,6 +18,7 @@
           <key id="dc:description" template="[description]"/>
           <key id="dc:startDate" template="[startDate]"/>
           <key id="dc:location" template="[location/city]"/>
+        <key id="dc:venue" template="[venue/location/street]"/>
        </outputs>
    </bindings>
 </class>
