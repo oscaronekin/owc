@@ -1,0 +1,15 @@
+<class xmlns:dc=”http://www.owl-ontologies.com/dublinCore#”>
+<meta>  
+  <author>Iker Azpeitia <author>  
+  <documentationURL> </documentationURL>  
+  <sampleURI>http://rdf.onekin.org/testiker/test1<sampleQuery>  
+</meta>  
+
+<binding>
+<table odtTable="testiker" odtLocation="https://dl.dropboxusercontent.com/u/8640666/arxiv.xml" itemPath="/query/results/entry" inputKey="id_list"/>
+<inputs>
+<outputs>
+</bindings>
+
+
+<class>
