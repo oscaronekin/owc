@@ -14,6 +14,7 @@
 
        <outputs>
           <key id="scom:Event" template="http://rdf.onekin.org/testiker/test2/[event/id]"/>
+        <key id="dc:id" template="[event/id]"/>
           <key id="dc:location" template="[@location]"/>
        </outputs>
    </bindings>
