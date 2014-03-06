@@ -13,7 +13,7 @@
 </inputs>
 
 <outputs>
-     	     <key id="id" template="[id]"/>
+     	     <key id="id" template="111111222333"/>
 </outputs>
 
 </bindings>
