@@ -1,27 +1,20 @@
-<class name="scom:test" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<class name="scom:Venue" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<meta>
+    <author>Iker Azpeitia</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/testiker/test1/madrid</sampleURI>
+  </meta>
 
-<meta>  
-  <author>Iker Azpeitia </author>  
-  <documentationURL> </documentationURL>  
-  <sampleURI>http://rdf.onekin.org/testiker/test1/madrid</sampleURI>  
-</meta>  
+   <bindings>
+       <table odtTable="lastfm.geo.getevents" itemPath="/query/results/lfm/events" inputKey="location"/>
+       
+       <inputs>
+       	   <key id="api_key" value="54839b2971aef0f6b99ebb410a0ec588"/>
+      </inputs>
 
-<bindings>
-<table odtTable="lastfm.geo.getevents" odtLocation="http://www.datatables.org/lastfm/lastfm.geo.getevents.xml" itemPath="query.results.events.event" inputKey="location"/>
-
-<inputs>
-       	   <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
-</inputs>
-
-<outputs>
-     	     <key id="dc:location" template="[id]"/>
-     	     <key id="dc:location" template="[title]"/>
-</outputs>
-
-</bindings>
-
-<function selector="hello" param="b">
-return 'Hello-'+b;
-</function>
-
+       <outputs>
+          <key id="scom:Event" template="http://rdf.onekin.org/testiker/test2/[evetn/id]"/>
+          <key id="dc:location" template="[@location]"/>
+       </outputs>
+   </bindings>
 </class>
