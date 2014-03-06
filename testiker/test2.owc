@@ -1,0 +1,23 @@
+<class name="scom:Event" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<meta>
+    <author>Iker Azpeitia</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/testiker/test2/3730745</sampleURI>
+  </meta>
+
+   <bindings>
+       <table odtTable="lastfm.event.getinfo" itemPath="/query/results/lfm/event" inputKey="event"/>
+       
+       <inputs>
+       	   <key id="api_key" value="54839b2971aef0f6b99ebb410a0ec588"/>
+      </inputs>
+
+       <outputs>
+          <key id="dc:title" template="[title]"/>
+          <key id="dc:artist" template="[artists/artist]"/>
+          <key id="dc:description" template="[description]"/>
+          <key id="dc:startDate" template="[startDate]"/>
+          <key id="dc:location" template="[location/city]"/>
+       </outputs>
+   </bindings>
+</class>
