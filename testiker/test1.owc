@@ -13,14 +13,13 @@
       </inputs>
 
        <outputs>
-          <key id="scom:Event" template="http://rdf.onekin.org/testiker/test2/{same([event/id])}"/>
-        <key id="dc:id" template="[event/id]"/>
+          <key id="scom:Event" template="{eventURI([event/id])}"/>
           <key id="dc:location" template="[@location]"/>
        </outputs>
    </bindings>
    
-    <function selector="same" param="param">
-        return param;
+    <function selector="eventURI" param="param">
+        return "http://rdf.onekin.org/testiker/test2/"+param;
     </function>
     
 </class>
