@@ -1,10 +1,10 @@
 <class name="scom:test" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
 
-<meta>  
-  <author>Iker Azpeitia <author>  
-  <documentationURL> </documentationURL>  
-  <sampleURI>http://rdf.onekin.org/testiker/test1/madrid</sampleURI>  
-</meta>  
+<meta>  
+  <author>Iker Azpeitia </author>  
+  <documentationURL> </documentationURL>  
+  <sampleURI>http://rdf.onekin.org/testiker/test1/madrid</sampleURI>  
+</meta>  
 
 <bindings>
 <table odtTable="lastfm.geo.getevents" odtLocation="http://www.datatables.org/lastfm/lastfm.geo.getevents.xml" itemPath="query.results.events.event" inputKey="location"/>
@@ -13,9 +13,14 @@
        	   <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
 </inputs>
 
+<outputs>
+     	     <key id="dc:description" template="111111222333"/>
+</outputs>
+
 </bindings>
 
 <function selector="hello" param="b">
 return 'Hello-'+b;
 </function>
-<class>
+
+</class>
