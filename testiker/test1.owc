@@ -2,7 +2,7 @@
 <meta>  
   <author>Iker Azpeitia <author>  
   <documentationURL> </documentationURL>  
-  <sampleURI>http://rdf.onekin.org/lastfm.geo.getevents/test1<sampleQuery>  
+  <sampleQuery>http://rdf.onekin.org/lastfm.geo.getevents/test1</sampleQuery>  
 </meta>  
 
 <binding>
