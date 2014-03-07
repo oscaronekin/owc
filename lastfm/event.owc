@@ -1,0 +1,24 @@
+<class name="scom:Event" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/lastfm/event/3733508</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="lastfm.event.getinfo" itemPath="/query/results/lfm/event/" inputKey="event"/>
+       <inputs>
+          <key id="api_key" value="54839b2971aef0f6b99ebb410a0ec588"/>
+       </inputs>
+       <outputs>
+          <key id="dc:title" template="[title]"/>
+          <key id="dc:description" template="[description]"/>
+          <key id="dc:artist" template="[artist/artist]"/>
+          <key id="dc:venue" template="[venue/location/street]"/>
+          <key id="dc:startdate" template="[startDate]"/>
+       </outputs>
+   </bindings>
+   <function selector="same" param="b">
+        return b;
+    </function>
+</class>
