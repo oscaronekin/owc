@@ -1,0 +1,20 @@
+<class name="scom:Place" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/lastfm/place/madrid</sampleURI>
+  </meta>
+	
+   <bindings>	 
+       <table odtTable="lastfm.geo.getevents" itemPath="/query/results/lfm/events/event/" inputKey="location"/>
+       <inputs>
+          <key id="api_key" value="54839b2971aef0f6b99ebb410a0ec588"/>
+       </inputs>
+       <outputs>
+          <key id="dc:event" template="http://rdf.onekin.org/lastfm/event/{same([id])}"/>
+       </outputs>
+   </bindings>
+   <function selector="same" param="b">
+        return b;
+    </function>
+</class>
