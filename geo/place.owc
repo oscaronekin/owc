@@ -6,7 +6,7 @@
   </meta>
 	
    <bindings>	 
-       <table odtTable="geo.places" itemPath="/query/results/place" inputKey="woeid"/>
+       <table odtTable="geo.places" itemPath="/query/results/place" primaryKey="woeid"/>
        <outputs>
           <key id="dc:name" template="[name]"/>
           <key id="dc:woeid" template="[woeid]"/>
