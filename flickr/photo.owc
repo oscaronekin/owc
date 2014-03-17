@@ -1,12 +1,12 @@
 <class name="scom:Article" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
 <meta>
     <author>Jon Iturrioz</author>
-    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
+    <documentationURL></documentationURL>
     <sampleURI>http://rdf.onekin.org/flickr/photo/2186714153</sampleURI>
   </meta>
 	
    <bindings>	 
-       <table odtTable="flickr.photos.info" itemPath="/query/results/photo" inputKey="photo_id"/>
+       <table odtTable="flickr.photos.info" itemPath="/query/results/photo" primaryKey="photo_id"/>
        <inputs>
           <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
        </inputs>
