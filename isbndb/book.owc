@@ -6,7 +6,7 @@
   </meta>
 	
    <bindings>	 
-       <table odtTable="isbnDb" odtLocation="https://dl.dropboxusercontent.com/u/8640666/isbnDb.xml" itemPath="/query/results/BookData" inputKey="value1"/>
+       <table odtTable="isbnDb" odtLocation="https://dl.dropboxusercontent.com/u/8640666/isbnDb.xml" itemPath="/query/results/BookData" primaryKey="value1"/>
        <outputs>
           <key id="dc:title" template="[Title]"/>
           <key id="dc:publisher" template="[PublisherText]"/>
