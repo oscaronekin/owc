@@ -6,7 +6,7 @@
   </meta>
 	
    <bindings>	 
-       <table odtTable="flickr.places" itemPath="/query/results/place" inputKey="query"/>
+       <table odtTable="flickr.places" itemPath="/query/results/place" primaryKey="query"/>
        <inputs>
           <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
        </inputs>
