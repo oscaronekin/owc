@@ -6,7 +6,7 @@
   </meta>
 
    <bindings>
-       <table odtTable="core.rank" odtLocation="http://developer.onekin.org/odt/core.rank.xml" itemPath="/query/results/conference" inputKey="conference"/>
+       <table odtTable="core.rank" odtLocation="http://developer.onekin.org/odt/core.rank.xml" itemPath="/query/results/conference" primaryKey="conference"/>
        <outputs>
           <key id="dc:title" template="[title]"/>
           <key id="dc:acronym" template="[acronym]"/>
