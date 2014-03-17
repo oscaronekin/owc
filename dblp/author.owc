@@ -9,6 +9,7 @@
        <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" inputKey="q" pre="ce:author:"/>
        <outputs>
 	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
+       </outputs>
    </bindings>
    <function selector="hello" param="a">
         return 'Hello-'+a;
