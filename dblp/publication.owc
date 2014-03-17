@@ -6,7 +6,7 @@
   </meta>
 
    <bindings>
-       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpPublication.xml" itemPath="/query/results/dblp/*[1]/" inputKey="key" />
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpPublication.xml" itemPath="/query/results/dblp/*[1]/" primaryKey="key" />
        <outputs>
          <key id="dc:title" template="[title]" />
          <key id="dc:date" template="[date]" />
