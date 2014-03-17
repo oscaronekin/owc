@@ -9,7 +9,6 @@
        <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" inputKey="q" pre="ce:author:"/>
        <outputs>
  	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
-         <key id="dc:venue" template="{hello([venue@conference])}" />
        </outputs>
    </bindings>
    <function selector="hello" param="a">
@@ -18,11 +17,4 @@
    <function selector="hello2" param="b">
         return b.substr('http://www.dblp.org/rec/bibtex/'.length);
     </function>
-    <function selector="assignvenue" param="conf">
-   if (conf === null){
-	return '';
-}else{
-	return 'http://rdf.onekin.org/'+conf;
-}
-</function>
 </class>
