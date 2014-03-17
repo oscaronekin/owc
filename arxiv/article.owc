@@ -6,7 +6,7 @@
   </meta>
 	
    <bindings>	 
-       <table odtTable="arxiv" odtLocation="https://dl.dropboxusercontent.com/u/8640666/arxiv.xml" itemPath="/query/results/entry" inputKey="id_list"/>
+       <table odtTable="arxiv" odtLocation="https://dl.dropboxusercontent.com/u/8640666/arxiv.xml" itemPath="/query/results/entry" primaryKey="id_list"/>
        <outputs>
           <key id="dc:description" template="[summary]"/>
           <key id="dc:title" template="[title]"/>
