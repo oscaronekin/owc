@@ -6,7 +6,7 @@
   </meta>
 	
    <bindings>	 
-       <table odtTable="lastfm.event.getinfo" itemPath="/query/results/lfm/event/" inputKey="event"/>
+       <table odtTable="lastfm.event.getinfo" itemPath="/query/results/lfm/event/" primaryKey="event"/>
        <inputs>
           <key id="api_key" value="54839b2971aef0f6b99ebb410a0ec588"/>
        </inputs>
