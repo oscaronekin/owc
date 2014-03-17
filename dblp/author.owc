@@ -1,12 +1,12 @@
 <class name="scom:Author" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
 <meta>
     <author>Jon Iturrioz</author>
-    <documentationURL>http://arxiv.org/help/api/index</documentationURL>
+    <documentationURL></documentationURL>
     <sampleURI> http://rdf.onekin.org/dblp/author/jon_iturrioz</sampleURI>
   </meta>
 	
    <bindings>	 
-       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" inputKey="q" pre="ce:author:"/>
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" primaryKey="q" pre="ce:author:"/>
        <outputs>
  	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
        </outputs>
