@@ -6,7 +6,7 @@
   </meta>
 
    <bindings>	 
-       <table odtTable="job" odtLocation="https://dl.dropboxusercontent.com/u/8640666/authJob.txt" itemPath="/query/results" primaryKey="id"/>
+       <table odtTable="job" odtLocation="https://dl.dropboxusercontent.com/u/8640666/authJob.txt" itemPath="/query/results/rsp" primaryKey="id"/>
        <inputs>
           <key id="api_key" value="0611ba57f103e1ec1aa72d61a192b72e"/>
        </inputs>
