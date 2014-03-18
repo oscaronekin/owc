@@ -1,0 +1,22 @@
+<class name="scom:Place" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/flickr/place2/37.7749300,-122.4194200</sampleURI>
+ </meta>
+	
+   <bindings>	 
+       <table odtTable="flickr.photos.search" itemPath="/query/results/photo" primaryKey="lat,lon" />
+       <inputs>
+          <key id="api_key" value="2a97cfbd41563a5c6a5dbb9853fcb7d2"/>
+          <key id="has_geo" value="true"/>
+
+       </inputs>
+       <outputs>
+          <key id="dc:photo_id" template="http://rdf.onekin.org/flickr/photo/{same([@id])}" />
+       </outputs>
+   </bindings>
+   <function selector="same" param="id">
+        return id;
+    </function>
+</class>
