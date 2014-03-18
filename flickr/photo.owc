@@ -14,6 +14,8 @@
           <key id="dc:description" template="[description]"/>
           <key id="dc:title" template="[title]"/>
           <key id="dc:format" template="Digital photo"/>
+          <key id="dc:tag" template="[tags/tag]"/>
+
           <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([location/@latitude],[location/@longitude])}" />
        </outputs>
    </bindings>
