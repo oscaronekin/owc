@@ -17,10 +17,14 @@
           <key id="dc:tag" template="[tags/tag]"/>
 
           <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([location/@latitude],[location/@longitude])}" />
+          <key id="dc:job" template="http://rdf.onekin.org/authjob/job/{same([tags/tag])}" />
+
        </outputs>
    </bindings>
    <function selector="position" param="lat,lon">
         return lat+','+lon;
     </function>
-   
+   <function selector="same" param="t">
+        return t;
+    </function>
 </class>
