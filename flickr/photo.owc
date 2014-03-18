@@ -1,10 +1,10 @@
-<class name="scom:Article" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
+<class name="ex:Photo" xmlns:ex="http://example.org#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">	
 <meta>
     <author>Jon Iturrioz</author>
     <documentationURL></documentationURL>
-    <sampleURI>http://rdf.onekin.org/flickr/photo/2186714153</sampleURI>
+    <sampleURI>http://rdf.onekin.org/flickr/photo/13148993323</sampleURI>
   </meta>
-	
+
    <bindings>	 
        <table odtTable="flickr.photos.info" itemPath="/query/results/photo" primaryKey="photo_id"/>
        <inputs>
@@ -14,12 +14,11 @@
           <key id="dc:description" template="[description]"/>
           <key id="dc:title" template="[title]"/>
           <key id="dc:format" template="Digital photo"/>
+          <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([location/@latitude],[location/@longitude])}" />
        </outputs>
    </bindings>
-   <function selector="underscore" param="author">
-        return author.toLowerCase().replace(' ','_');
+   <function selector="position" param="lat,lon">
+        return lat+','+lon;
     </function>
-   <function selector="hello2" param="b">
-        return 'Hello-'+b;
-    </function>
+   
 </class>
