@@ -6,13 +6,13 @@
   </meta>
 
    <bindings>	 
-       <table odtTable="job" odtLocation="https://dl.dropboxusercontent.com/u/8640666/authJob.txt" itemPath="/query/results/listing" primaryKey="id"/>
+       <table odtTable="job" odtLocation="https://dl.dropboxusercontent.com/u/8640666/authJob.txt" itemPath="/query/results" primaryKey="id"/>
        <inputs>
           <key id="api_key" value="0611ba57f103e1ec1aa72d61a192b72e"/>
        </inputs>
        <outputs>
-          <key id="dc:description" template="[@description]"/>
-          <key id="dc:title" template="[@title]"/>
+          <key id="dc:description" template="[listing/@description]"/>
+          <key id="dc:title" template="[listing/@title]"/>
           <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([company/location/@lat],[company/location/@lng])}" />
        </outputs>
    </bindings>
