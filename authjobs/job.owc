@@ -11,7 +11,7 @@
           <key id="api_key" value="0611ba57f103e1ec1aa72d61a192b72e"/>
        </inputs>
        <outputs>
-          <key id="dc:description" template="[@title]"/>
+          <key id="dc:description" template="[@description]"/>
           <key id="dc:title" template="[@title]"/>
           <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([company/location/@lat],[company/location/@lng])}" />
        </outputs>
