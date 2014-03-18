@@ -12,7 +12,7 @@
        </inputs>
        <outputs>
           <key id="dc:description" template="[listing/@description]"/>
-          <key id="dc:title" template="[listing/@title]"/>
+          <key id="dc:title" template="[company/location/@lat]"/>
           <key id="dc:place" template="http://rdf.onekin.org/lastfm/place2/{position([company/location/@lat],[company/location/@lng])}" />
        </outputs>
    </bindings>
