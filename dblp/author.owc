@@ -9,12 +9,17 @@
        <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" primaryKey="q" pre="ce:author:"/>
        <outputs>
  	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
+ 	  <key id="dc:attendeeOf" template="[venue]" />
+	  <key id="dc:attendeeOf" template="[venue@conference]" />
        </outputs>
    </bindings>
    <function selector="hello" param="a">
         return 'Hello-'+a;
     </function>
    <function selector="hello2" param="b">
+        return b.substr('http://www.dblp.org/rec/bibtex/'.length);
+    </function>
+   <function selector="venue" param="b">
         return b.substr('http://www.dblp.org/rec/bibtex/'.length);
     </function>
 </class>
