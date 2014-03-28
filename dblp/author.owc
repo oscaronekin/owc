@@ -10,7 +10,7 @@
        <outputs>
  	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
  	  <key id="dc:attendeeOf" template="[venue]" />
-	  <key id="dc:attendeeOf" template="[venue@conference]" />
+	  
        </outputs>
    </bindings>
    <function selector="hello" param="a">
