@@ -13,7 +13,7 @@
 	 <key id="dc:booktitle" template="[booktitle]" />
 	 <key id="dc:publisher" template="[publisher]" />
 	 <key id="dc:date" template="[date]" />
-	 <key id="dc:sameAs" template="http://rdf.onekin.org/isbndb/book/{removeISBN([isbn])}" />
+	 <uri id="dc:sameAs" template="http://rdf.onekin.org/isbndb/book/{removeISBN([isbn])}" />
        </outputs>
    </bindings>
    
