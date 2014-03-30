@@ -10,11 +10,10 @@
        <outputs>
          <key id="dc:title" template="[title]" />
          <key id="dc:date" template="[date]" />
-<key id="dc:pages" template="[pages]" />
-<key id="dc:year" template="[year]" />
-
-<key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
-	<key id="dc:proceedings" template="http://rdf.onekin.org/dblp/proc/{same([crossref])}" />
+	<key id="dc:pages" template="[pages]" />
+	<key id="dc:year" template="[year]" />
+	<uri id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+	<uri id="dc:proceedings" template="http://rdf.onekin.org/dblp/proc/{same([crossref])}" />
        </outputs>
    </bindings>
    <function selector="hello" param="a">
