@@ -11,7 +11,7 @@
           <key id="dc:description" template="[summary]"/>
           <key id="dc:title" template="[title]"/>
           <key id="dc:format" template="Digital document"/>
-          <key id="dc:author" uri="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+          <uri id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
        </outputs>
    </bindings>
    <function selector="underscore" param="author">
