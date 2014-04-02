@@ -1,0 +1,27 @@
+<class name="scom:Author" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI> http://rdf.onekin.org/dblp/author/jon_iturrioz</sampleURI>
+  </meta>
+
+   <bindings>
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" primaryKey="q" pre="ce:author:"/>
+       <outputs>
+  <uri id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
+  <uri id="dc:attendeeOf" template="http://rdf.onekin.org/core/rank/{same([info/venue/@conference])}" />
+       </outputs>
+   </bindings>
+   <function selector="hello" param="a">
+        return 'Hello-'+a;
+    </function>
+   <function selector="hello2" param="b">
+        return b.substr('http://www.dblp.org/rec/bibtex/'.length);
+    </function>
+   <function selector="venue" param="b">
+        return b.substr('http://www.dblp.org/rec/bibtex/'.length);
+    </function>
+    <function selector="same" param="b">
+        return b;
+    </function>
+</class>
