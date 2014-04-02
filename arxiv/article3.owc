@@ -2,7 +2,7 @@
 <meta>
     <author>Jon Iturrioz</author>
     <documentationURL>http://arxiv.org/help/api/index</documentationURL>
-    <sampleURI> http://rdf.onekin.org/arxiv/article/cs/9901002v1</sampleURI>
+    <sampleURI> http://rdf.onekin.org/arxiv/article3/cs/9901002v1</sampleURI>
   </meta>
 
    <bindings>
