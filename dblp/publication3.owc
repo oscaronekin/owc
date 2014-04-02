@@ -1,0 +1,29 @@
+<class name="scom:Publication" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI>http://rdf.onekin.org/dblp/publication/conf/www/DiazII05</sampleURI>
+  </meta>
+
+   <bindings>
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpPublication.xml" itemPath="/query/results/dblp/*[1]/" primaryKey="key" />
+       <outputs>
+         <key id="dc:title" template="[title]" />
+         <key id="dc:date" template="[date]" />
+<key id="dc:pages" template="[pages]" />
+<key id="dc:year" template="[year]" />
+<uri id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+<uri id="dc:proceedings" template="http://rdf.onekin.org/dblp/proc/{same([crossref])}" />
+       </outputs>
+   </bindings>
+   <function selector="hello" param="a">
+        return 'Hello-'+a;
+    </function>
+   <function selector="same" param="b">
+        return b;
+    </function>
+    <function selector="underscore" param="author">
+        return author.toLowerCase().split(' ').join('_')
+    </function>
+</class>
+
