@@ -8,8 +8,8 @@
    <bindings>	 
        <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpAuthor.xml" itemPath="/query/results/hit" primaryKey="q" pre="ce:author:"/>
        <outputs>
- 	  <uri id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
- 	  <uri id="dc:attendeeOf" template="http://rdf.onekin.org/core/rank/{same([info/venue/@conference])}" />
+ 	  <key id="dc:creator_of" template="http://rdf.onekin.org/dblp/publication/{hello2([url])}" />
+ 	  <key id="dc:attendeeOf" template="http://rdf.onekin.org/core/rank/{same([info/venue/@conference])}" />
        </outputs>
    </bindings>
    <function selector="hello" param="a">
