@@ -1,0 +1,24 @@
+<class name="scom:Publication" xmlns:scom="http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#" xmlns:dc="http://www.owl-ontologies.com/dublinCore#">
+<meta>
+    <author>Jon Iturrioz</author>
+    <documentationURL></documentationURL>
+    <sampleURI> http://rdf.onekin.org/dblp/proc/conf/icml/2001</sampleURI>
+  </meta>
+
+   <bindings>
+       <table odtTable="dblp" odtLocation="https://dl.dropboxusercontent.com/u/8640666/dblpProc.xml" itemPath="/query/results/dblp/proceedings/" primaryKey="key" />
+       <outputs>
+         <key id="dc:title" template="[title]" />
+         <key id="dc:editor" template="[editor]" />
+<key id="dc:booktitle" template="[booktitle]" />
+<key id="dc:publisher" template="[publisher]" />
+<key id="dc:date" template="[date]" />
+<uri id="dc:sameAs" template="http://rdf.onekin.org/isbndb/book/{removeISBN([isbn])}" />
+       </outputs>
+   </bindings>
+   
+   <function selector="removeISBN" param="isbn">
+        return isbn.replace(/-/g,'');
+    </function>
+    
+</class>
