@@ -12,6 +12,7 @@
           <key id="dc:title" template="[title]"/>
           <key id="dc:format" template="Digital document"/>
           <key id="dc:author" template="http://rdf.onekin.org/dblp/author/{underscore([author])}" />
+          <key id="dc:author" template="http://data.semanticweb.org/person/{underscore([author])}" />
        </outputs>
    </bindings>
    <function selector="underscore" param="author">
