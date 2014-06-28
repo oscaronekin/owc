@@ -9,7 +9,7 @@
     </meta>
     <!--GLOBAL FUNCTIONS-->
     <execute><![CDATA[  
-y.include('store://JZK5IMuA2uTgz5byhAs8pq'); // LD.js.       
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.       
 	//E4X namespace
   
 function composeTitle(info){
