@@ -764,6 +764,7 @@ LD = new LD();
 //processListElements = new processList();
 
 //y.env("http://datatables.org/alltables.env"); 
+y.env("store://3KN9e5FWbSC9wFngrdxRWM"); 
  
  //TODO
  // gestion namespace por defecto. el prefix vacio
