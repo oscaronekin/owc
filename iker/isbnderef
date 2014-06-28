@@ -66,7 +66,7 @@ variables.isbn= isbn;
 variables.URI= amazonbookURI;
 //var qu = "env '"+environment+"'; select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | isbnderef.amazonbook(@URI)";
 var qu = " select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | isbnderef.amazonbook(@URI)";
-y.log(qu);
+y.log("ik::: "+qu);
 var q = y.query(qu, variables);
 var results =q.results;
 response.object = XML(results);
