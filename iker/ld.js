@@ -763,6 +763,7 @@ var rdftxt2= "</rdf:RDF>";
 LD = new LD();
 //processListElements = new processList();
 
+y.env("http://datatables.org/alltables.env"); 
  
  //TODO
  // gestion namespace por defecto. el prefix vacio
