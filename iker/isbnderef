@@ -60,6 +60,7 @@ function offerURI(id)
             <execute><![CDATA[
             
 y.env(environment); 
+y.log(environment);
 var variables = {};
 variables.isbn= isbn;
 variables.URI= amazonbookURI;
