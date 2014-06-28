@@ -54,8 +54,12 @@ function offerURI(id)
               <inputs>
                 <key id="amazonbookURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
+                <key id="environment" type="xs:string" paramType="variable" required="true"/>
+                
                </inputs>
             <execute><![CDATA[
+            
+y.env(environment); 
 var variables = {};
 variables.isbn= isbn;
 variables.URI= amazonbookURI;
