@@ -50,7 +50,7 @@ function encodeISBN(isbn){
 	return newISBN;
 }
 
-function offerURI(id)
+function encodeOfferURI(id)
 { var isbnNum=getISBN(); 
   var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/isbn/"+isbnNum+"/offerid/"+encodeOffer(id);
   return offerURI;
@@ -126,7 +126,7 @@ itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Author, encodeAutho
 itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Creator, encodeAuthorURI);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
 itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.Name, encodeSubjectUri);
-itemresource.addProperty ("scom:hasOffer", tuple.Offers.Offer.OfferListing.OfferListingId,offerURI);
+itemresource.addProperty ("scom:hasOffer", tuple.Offers.Offer.OfferListing.OfferListingId,encodeOfferURI);
 response.object =LD.serialize();
             ]]>   
             </execute>
