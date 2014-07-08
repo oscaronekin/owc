@@ -22,7 +22,7 @@ function getISBN(){
 function encodeOffer(id){
   var begin = id.indexOf("%");
   if (begin> -1){
-	id=id.substring(begin);
+	id=id.substring(0,begin);
   }
   return id;
 }	
