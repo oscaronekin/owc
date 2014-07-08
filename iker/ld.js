@@ -782,7 +782,8 @@ var rdftxt2= "</rdf:RDF>";
 	}	
 	try { 
 		//txt=txt.replace(/&/g, '&amp;')
-             var root= <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'> new XML ({txt}) </rdf:RDF>;
+		var dentro = new XML ({txt});
+             var root= <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'> {dentro} </rdf:RDF>;
 	     y.log(root.toXMLString());
         return root;
 	//return txt;
