@@ -467,7 +467,7 @@ rdf = (function() {
 	for (var index = 0; index < arr.length; ++index) {		
 		if (t.o.interfaceName =='NamedNode'){
 		y.log("dos");
-			root[prop].@resource=obj;
+			root[prop]=obj;
 		}else{
 			y.log("tres");
 			root[prop]=obj;
