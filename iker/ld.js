@@ -459,13 +459,17 @@ rdf = (function() {
        var value = this.prf[key];
        txt2=txt2+"\n xmlns:"+ key+"='"+value+"'";      
     }
-    txt2=txt2+">\n</rdf:Description>";  
+    txt2=txt2+">\n</rdf:Description>";
+    y.log(txt2);
 	var root = new XML(txt2);
-		y.log(root);
+	y.log(root);
+	y.log("uno");
 	for (var index = 0; index < arr.length; ++index) {		
 		if (t.o.interfaceName =='NamedNode'){
+		y.log("dos");
 			root[prop].@resource=obj;
 		}else{
+			y.log("tres");
 			root[prop]=obj;
 		}
 		y.log(root);
