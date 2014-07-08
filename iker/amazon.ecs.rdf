@@ -191,7 +191,7 @@ response.object =LD.serialize();
             </inputs>    
           <execute> <![CDATA[ //RDFication
 var itemresource = LD.createInstance(URI);
-y.log(tuple.Item);
+y.log(tuple.ItemAttributes);
 itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
 itemresource.addProperty("foaf:name", tuple.ItemAttributes.Author);
 itemresource.addNameSpace("owl","http://www.w3.org/2002/07/owl#");
