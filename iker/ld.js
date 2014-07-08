@@ -730,9 +730,7 @@ var rdftxt2= "</rdf:RDF>";
 	try { 
 		txt=txt.replace(/&/g, '&amp;')
 		txt=rdftxt+txt+rdftxt2;
-		y.log(txt);
-        return new XML (txt);
-	//return txt;
+		return new XML (txt);
 	}
 	catch(err) {
 		y.log(err);
