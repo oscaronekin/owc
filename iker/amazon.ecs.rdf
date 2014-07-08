@@ -142,6 +142,8 @@ var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("gr", "http://purl.org/goodrelations/v1#");
 itemresource.addProperty("rdf:type" ,"gr:Offering");
 y.log(tuple);
+y.log(tuple.Offers.Offer.OfferListing.Price.Amount);
+y.log(tuple.Offers.Offer.OfferListing.Price.CurrencyCode);
 itemresource.addProperty("gr:hasCurrencyValue", tuple.Offers.Offer.OfferListing.Price.Amount);
 itemresource.addProperty("gr:hasCurrency", tuple.Offers.Offer.OfferListing.Price.CurrencyCode);
 response.object =LD.serialize();
