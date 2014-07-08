@@ -2,7 +2,7 @@
 <table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
     <meta>
         <author>IKER AZPEITIA</author>
-        <description>RDFIZER FOR GOOGLE.BOOKS</description>
+        <description>RDFIZER FOR Amazon</description>
         <documentationURL><!-- url for API documentation --></documentationURL>
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn+006251587X" AND maxResults=3 AND startIndex=2</sampleQuery>    
@@ -26,7 +26,7 @@ function nextReviewURI(){
 }
 
 function encodeAuthorURI(author){
-	var authorUri = URI.replace("/books/","/persons/");
+	var authorUri = URI.replace("/book/","/persons/");
 	var pos = authorUri.lastIndexOf("/"); 
 	authorUri = authorUri.substring(0,pos+1) + encodeURIComponent(author);
 	return authorUri;
@@ -39,13 +39,14 @@ function encodeISBN(isbn){
 
 function offerURI(id)
 {
- var offerURI = URI.replace("/books/","/amazonOffer/");
+ var offerURI = URI.replace("/book/","/amazonOffer/");
   return offerURI+"/"+id;
 } ]]>
     </execute> 
     <bindings>
         <!--LOWERIGN SELECTS-->
-         <select itemPath="results.RDF" produces="XML"> <!--itemPath="ItemSearchResponse.Items.Item"-->
+         <select itemPath="results.RDF" produces="XML"> <!--select * from amazon.ecs where ItemId='006251587X' and AssociateTag ='123' and ResponseGroup='Large' and AWSAccessKeyId="AKIAJY4Z2CNCTXQXNQDQ" and
+ secret='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' ;-->
               <inputs>
                 <key id="bookURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
@@ -62,7 +63,9 @@ response.object = XML(results);
             ]]></execute>
         </select>
          
-         <select itemPath="results.RDF" produces="XML"> <!--itemPath="ItemSearchResponse.Items.Item"-->
+         <select itemPath="results.RDF" produces="XML"> 
+		 <!--select Offers.Offer.OfferListing from amazon.ecs where ItemId='006251587X' and AssociateTag ='123' and ResponseGroup='Large' and AWSAccessKeyId="AKIAJY4Z2CNCTXQXNQDQ" and
+ secret='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' and Offers.Offer.OfferListing.OfferListingId= 't5E3tY1uPXLrrUdbZJmqGwIdC%2Bgk%2F17Alzo3XICQHOgxA8EmA3%2FmfOf5u7kkwv2%2FmLQ5bgTCf5%2BLcKN66AhBv0hGGtWjHfq8WSOsEOAmfms%3D';-->
               <inputs>
                 <key id="offerURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
