@@ -462,12 +462,14 @@ rdf = (function() {
     txt2=txt2+">\n</rdf:Description>";
     y.log(txt2);
 	var root = new XML(txt2);
-	y.log(root);
+	y.log(root.toXMLString());
 	y.log("uno");
 	for (var index = 0; index < arr.length; ++index) {		
 		if (t.o.interfaceName =='NamedNode'){
-		y.log("dos");
-			root[prop]=obj;
+		        y.log("dos");
+			h=prop;
+			ab=obj;
+			root += <{h} rdf:about={ab}/>;
 		}else{
 			y.log("tres");
 			root[prop]=obj;
