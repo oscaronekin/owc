@@ -38,9 +38,8 @@ function encodeISBN(isbn){
 }
 
 i= 1;
-function encodeOfferURI(id)
+function encodeOffer()
 { var isbnNum=getISBN();
-var offerUri = URI.replace("/books/","/googleOffers/");
 var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
 i++;
 return offerURI;
@@ -91,7 +90,7 @@ itemresource.addProperty("dc:language", tuple.items.volumeInfo.language);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
 itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.categories, encodeSubjectUri);
 y.log('termino');'
-//itemresource.addProperty ("scom:hasOffer",offerUri);
+//itemresource.addProperty ("scom:hasOffer",tuple.items.saleInfo, encodeOffer);
 response.object =LD.serialize();
             ]]>   
             </execute>
