@@ -453,11 +453,11 @@ rdf = (function() {
 				//alert(this.prf[px]);
 		 	}
 
-			if (t.o.interfaceName =='NamedNode'){
+		/*	if (t.o.interfaceName =='NamedNode'){
 txt = txt + "\n\t <"+prop+" rdf:resource=\""+obj+"\"/>";
-			}else{
+			}else{*/
 				txt = txt + "\n\t <"+prop+">"+obj+"</"+prop+">";
-			}
+			//}
 		 }
 
      var txt2 = "<rdf:Description rdf:about='"+s+"' ";
