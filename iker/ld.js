@@ -423,67 +423,6 @@ rdf = (function() {
         return prefix;
       };
       
-      XMLRDFSerializer.prototype.serialize2 = function(g) {
-	     var arr = g.toArray();
-		 if (arr.length== 0 ){return "";}
-		 var t = arr[0];
-		 var s = t.s;
-		 var px=this.prefix(s); 
-		 var iri= this.environment.prefixes[px];
-		 if (px!= null && iri!= null){
-			this.prf[px]=iri;
-			//alert(this.prf[px]);
-		 }
-		 var txt = ""; //<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>\n<rdf:Description rdf:about='"+s+"'>";
-		 for (var index = 0; index < arr.length; ++index) {
-			var t=arr[index];
-			var prop=t.p.toString();			
-			var obj=t.o.toString();
-			px=this.prefix(prop);
-			iri= this.environment.prefixes[px];
-		 	if (px!= null && iri!= null){
-				this.prf[px]=iri;
-				//alert(this.prf[px]);
-		 	}
-		 	px=this.prefix(obj);
-			iri= this.environment.prefixes[px];
-		 	if (px!= null && iri!= null){
-				this.prf[px]=iri;
-				//alert(this.prf[px]);
-		 	}
-        }
-        
-    var txt2 = "<rdf:Description rdf:about='"+s+"' ";
-    for (var key in this.prf) {
-       if (key === 'length' || !this.prf.hasOwnProperty(key)) continue;
-       var value = this.prf[key];
-       txt2=txt2+"\n xmlns:"+ key+"='"+value+"'";      
-    }
-    txt2=txt2+">\n</rdf:Description>";
-    y.log(txt2);
-	var root = new XML(txt2);
-	y.log(root.toXMLString());
-	y.log("uno");
-	for (var index = 0; index < arr.length; ++index) {		
-		if (t.o.interfaceName =='NamedNode'){
-		        y.log("dos");
-		        px=this.prefix(prop);
-			iri= this.environment.prefixes[px];
-		 	if (px!= null && iri!= null){
-				h=prop;
-				ab=obj;
-				root += <{h} rdf:about={ab} xmlns:{px}={iri}/>;
-		 	}else{
-		 		root += <{h} rdf:about={ab}/>;
-		 	}
-		}else{
-			y.log("tres");
-			root[prop]=obj;
-		}
-		y.log(root);
-	 }
-     return root;
-      };
 	  
       XMLRDFSerializer.prototype.serialize = function(g) {
 	     var arr = g.toArray();
@@ -780,28 +719,6 @@ var rdftxt2= "</rdf:RDF>";
       };      
  };
  
-  LD.prototype.serialize2 = function (){
-	var txt="";
-	for (var i=0; i < LD.insList.length; i++){
-		var instance = LD.insList[i];
-		txt +=instance.toString()+"\n";
-	}	
-	try { 
-		//txt=txt.replace(/&/g, '&amp;')
-		var dentro = new XML (txt);
-             var root= <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'> {dentro} </rdf:RDF>;
-	     y.log(root.toXMLString());
-        return root;
-	//return txt;
-	}
-	catch(err) {
-		y.log(err);
-		y.log(txt);
-		return txt;
-	}
-  };
- 
- 
   LD.prototype.serialize = function (){
 	var txt="";
 var rdftxt= "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>"
@@ -811,7 +728,7 @@ var rdftxt2= "</rdf:RDF>";
 		txt +=instance.toString()+"\n";
 	}	
 	try { 
-		//txt=txt.replace(/&/g, '&amp;')
+		txt=txt.replace(/&/g, '&amp;')
 		txt=rdftxt+txt+rdftxt2;
 		y.log(txt);
         return new XML (txt);
@@ -823,7 +740,7 @@ var rdftxt2= "</rdf:RDF>";
 		return txt;
 	}
   };
-  
+ 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
 		var first=true;
