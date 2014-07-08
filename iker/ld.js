@@ -454,7 +454,7 @@ rdf = (function() {
 		 	}
 
 			if (t.o.interfaceName =='NamedNode'){
-txt = txt + "\n\t <"+prop+" rdf:resource=\""+obj+"\"/>";
+                                txt = txt + "\n\t <"+prop+" rdf:resource=\""+obj+"\"/>";
 			}else{
 				txt = txt + "\n\t <"+prop+">"+obj+"</"+prop+">";
 			}
