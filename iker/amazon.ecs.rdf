@@ -16,10 +16,17 @@ function getISBN(){
   var begin = URI.indexOf("/book/");
   var isbnNum=URI.substring(begin+6);
   isbnNum.replace ("/",""); 
-   y.log(isbnNum);
   return isbnNum;
 }	
   
+function encodeOffer(id){
+  var begin = id.indexOf("%");
+  if (begin> -1){
+	id=id.substring(begin);
+  }
+  return id;
+}	
+
 function encodeSubjectUri(subject){
 	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
 	return subjectUri;
@@ -45,7 +52,7 @@ function encodeISBN(isbn){
 
 function offerURI(id)
 { var isbnNum=getISBN(); 
-  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+encodeURIComponent(id);
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+encodeOffer(id);
   return offerURI;
 } ]]>
     </execute> 
