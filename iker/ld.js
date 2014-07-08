@@ -728,7 +728,7 @@ var rdftxt2= "</rdf:RDF>";
 		txt +=instance.toString()+"\n";
 	}	
 	try { 
-		txt=txt.replace(/&/g, '&amp;')
+		//txt=txt.replace(/&/g, '&amp;')
         return new XML (rdftxt+txt+rdftxt2);
 	}
 	catch(err) {
