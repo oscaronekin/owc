@@ -54,7 +54,7 @@ function offerURI(id)
 var variables = {};
 variables.isbn= isbn;
 variables.URI= bookURI;
-var qu = "env '"+environment+"'; select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | isbnderef.amazonbook(@URI)";
+var qu = "select * from amazon.ecs where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | amazon.ecs.rdf.book(@URI)";
 y.log(qu);
 var q = y.query(qu, variables);
 var results =q.results;
@@ -71,7 +71,7 @@ response.object = XML(results);
 var variables = {};
 variables.isbn= isbn;
 variables.URI= offerURI;
-var qu = "env '"+environment+"'; select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | isbnderef.amazonbook(@URI)";
+var qu = "select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | amazon.ecs.rdf.offer(@URI)";
 y.log(qu);
 var q = y.query(qu, variables);
 var results =q.results;
