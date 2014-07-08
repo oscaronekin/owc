@@ -58,8 +58,7 @@ function encodeOfferURI(id)
     </execute> 
     <bindings>
         <!--LOWERIGN SELECTS-->
-         <select itemPath="results.RDF" produces="XML"> <!--select * from amazon.ecs where ItemId='006251587X' and AssociateTag ='123' and ResponseGroup='Large' and AWSAccessKeyId="AKIAJY4Z2CNCTXQXNQDQ" and
- secret='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' ;-->
+         <select itemPath="results.RDF" produces="XML"> 
               <inputs>
                 <key id="bookURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
@@ -77,8 +76,6 @@ response.object = XML(results);
         </select>
          
          <select itemPath="results.RDF" produces="XML"> 
-		 <!--select Offers.Offer.OfferListing from amazon.ecs where ItemId='006251587X' and AssociateTag ='123' and ResponseGroup='Large' and AWSAccessKeyId="AKIAJY4Z2CNCTXQXNQDQ" and
- secret='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' and Offers.Offer.OfferListing.OfferListingId= 't5E3tY1uPXLrrUdbZJmqGwIdC%2Bgk%2F17Alzo3XICQHOgxA8EmA3%2FmfOf5u7kkwv2%2FmLQ5bgTCf5%2BLcKN66AhBv0hGGtWjHfq8WSOsEOAmfms%3D';-->
               <inputs>
                 <key id="offerURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
