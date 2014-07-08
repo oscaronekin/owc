@@ -423,7 +423,7 @@ rdf = (function() {
         return prefix;
       };
       
-      XMLRDFSerializer.prototype.serialize = function(g) {
+      XMLRDFSerializer.prototype.serialize2 = function(g) {
 	     var arr = g.toArray();
 		 if (arr.length== 0 ){return "";}
 		 var t = arr[0];
@@ -479,7 +479,7 @@ rdf = (function() {
      return root;
       };
 	  
-      XMLRDFSerializer.prototype.toString = function(g) {
+      XMLRDFSerializer.prototype.serialize = function(g) {
 	     var arr = g.toArray();
 		 if (arr.length== 0 ){return "";}
 		 var t = arr[0];
@@ -776,6 +776,27 @@ var rdftxt2= "</rdf:RDF>";
  
   LD.prototype.serialize = function (){
 	var txt="";
+	for (var i=0; i < LD.insList.length; i++){
+		var instance = LD.insList[i];
+		txt +=instance.toString()+"\n";
+	}	
+	try { 
+		//txt=txt.replace(/&/g, '&amp;')
+             var root= <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>{txt}</rdf:RDF>;
+	     y.log(root.toXMLString());
+        return root;
+	//return txt;
+	}
+	catch(err) {
+		y.log(err);
+		y.log(txt);
+		return txt;
+	}
+  };
+ 
+ 
+  LD.prototype.serialize2 = function (){
+	var txt="";
 var rdftxt= "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>"
 var rdftxt2= "</rdf:RDF>";
 	for (var i=0; i < LD.insList.length; i++){
@@ -795,7 +816,7 @@ var rdftxt2= "</rdf:RDF>";
 		return txt;
 	}
   };
- 
+  
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
 		var first=true;
