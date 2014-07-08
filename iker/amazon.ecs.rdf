@@ -14,7 +14,7 @@ y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // 
 
 function getISBN(){
   var begin = URI.indexOf("/book/");
-  var isbnNum= URI.substring(begin+6);
+  var isbnNum=URI.substring(begin+6);
   isbnNum.replace ("/",""); 
    y.log(isbnNum);
   return isbnNum;
@@ -45,7 +45,7 @@ function encodeISBN(isbn){
 
 function offerURI(id)
 { var isbnNum=getISBN(); 
-  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+id;
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+encodeURIComponent(id);
   return offerURI;
 } ]]>
     </execute> 
