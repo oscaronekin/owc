@@ -95,6 +95,25 @@ response.object = XML(results);
             ]]></execute>
         </select>        
         
+ <select itemPath="results.RDF" produces="XML"> 
+              <inputs>
+                <key id="personURI" type="xs:string" paramType="variable" required="true"/>
+                <key id="offerid" type="xs:string" paramType="variable" required="true"/>				
+              </inputs>
+            <execute><![CDATA[
+var variables = {};
+variables.author= author;
+variables.URI= personURI;
+var qu = "select * from amazon.ecs  where  Keywords=@author and AssociateTag ='123' and ResponseGroup='Large'  and ItemAttributes.Author = @author | amazon.ecs.rdf.person(@URI)";
+y.log(qu);
+y.log(variables);
+var q = y.query(qu, variables);
+var results =q.results;
+response.object = XML(results);
+            ]]></execute>
+        </select>        
+
+
         <!--LIFTING FUNCTIONS-->
       <function name="book" >
            <inputs>
@@ -146,5 +165,40 @@ response.object =LD.serialize();
             ]]>   
             </execute>
            </function>        
+
+<function name="review" >
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute> <![CDATA[ //RDFication
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("gr", "http://purl.org/goodrelations/v1#");
+itemresource.addProperty("rdf:type" ,"gr:Offering");
+y.log(tuple);
+y.log(tuple.Offers.Offer.OfferListing.Price);
+itemresource.addProperty("gr:hasCurrencyValue", tuple.Offers.Offer.OfferListing.Price.Amount);
+itemresource.addProperty("gr:hasCurrency", tuple.Offers.Offer.OfferListing.Price.CurrencyCode);
+response.object =LD.serialize();
+            ]]>   
+            </execute>
+           </function>       
+
+<function name="person" >
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute> <![CDATA[ //RDFication
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
+itemresource.addProperty("foaf:name", tuple.ItemAttributes.Author);
+itemresource.addNameSpace("owl","http://www.w3.org/2002/07/owl#");
+itemresource.addProperty("owl:sameAs", tuple.ItemAttributes.Author, encodeAuthorURI);
+response.object =LD.serialize();
+            ]]>   
+            </execute>
+           </function>       
+
     </bindings>
 </table>
