@@ -62,10 +62,10 @@ return newISBN;
 i= 1;
 function encodeOfferURI(id)
 { var isbnNum=getISBN();
-var offerUri = URI.replace("/books/","/googleOffers/");
-var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
-i++;
-return offerURI;
+  var offerUri = URI.replace("/books/","/googleOffers/");
+  var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
+  i++;
+  return offerURI;
 } ]]>
     </execute> 
     <bindings>
