@@ -467,9 +467,15 @@ rdf = (function() {
 	for (var index = 0; index < arr.length; ++index) {		
 		if (t.o.interfaceName =='NamedNode'){
 		        y.log("dos");
-			h=prop;
-			ab=obj;
-			root += <{h} rdf:about={ab}/>;
+		        px=this.prefix(prop);
+			iri= this.environment.prefixes[px];
+		 	if (px!= null && iri!= null){
+				h=prop;
+				ab=obj;
+				root += <{h} rdf:about={ab} xmlns:{px}={iri}/>;
+		 	}else{
+		 		root += <{h} rdf:about={ab}/>;
+		 	}
 		}else{
 			y.log("tres");
 			root[prop]=obj;
@@ -774,7 +780,7 @@ var rdftxt2= "</rdf:RDF>";
       };      
  };
  
-  LD.prototype.serialize = function (){
+  LD.prototype.serialize2 = function (){
 	var txt="";
 	for (var i=0; i < LD.insList.length; i++){
 		var instance = LD.insList[i];
@@ -796,7 +802,7 @@ var rdftxt2= "</rdf:RDF>";
   };
  
  
-  LD.prototype.serialize2 = function (){
+  LD.prototype.serialize = function (){
 	var txt="";
 var rdftxt= "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>"
 var rdftxt2= "</rdf:RDF>";
