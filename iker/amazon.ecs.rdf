@@ -11,6 +11,14 @@
     <execute><![CDATA[  
 y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.       
 	//E4X namespace
+
+function getISBN(){
+  var begin = URI.indexOf("/book/");
+  var isbnNum=txt.substring(begin+6);
+  isbnNum.replace ("/",""); 
+   y.log(isbnNum);
+  return isbnNum;
+}	
   
 function encodeSubjectUri(subject){
 	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
@@ -19,16 +27,14 @@ function encodeSubjectUri(subject){
          
 i= 1;
 function nextReviewURI(){
-	var reviewURI = URI.replace("/book/","/reviews/");
+	var reviewURI = URI.replace("/book/","/review/");
     reviewURI = reviewURI+"_EditorialReview"+i; 
 	i++;
 	return reviewURI;
 }
 
 function encodeAuthorURI(author){
-	var authorUri = URI.replace("/book/","/persons/");
-	var pos = authorUri.lastIndexOf("/"); 
-	authorUri = authorUri.substring(0,pos+1) + encodeURIComponent(author);
+	var authorUri = "http://rdf.onekin.org/dblp.rdf/person/"+ encodeURIComponent(author);
 	return authorUri;
 }
 
@@ -38,9 +44,9 @@ function encodeISBN(isbn){
 }
 
 function offerURI(id)
-{
- var offerURI = URI.replace("/book/","/amazonOffer/");
-  return offerURI+"/"+id;
+{ var isbnNum=getISBN(); 
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+id;
+  return offerURI;
 } ]]>
     </execute> 
     <bindings>
@@ -80,8 +86,7 @@ var q = y.query(qu, variables);
 var results =q.results;
 response.object = XML(results);
             ]]></execute>
-        </select>
-        
+        </select>        
         
         <!--LIFTING FUNCTIONS-->
       <function name="book" >
