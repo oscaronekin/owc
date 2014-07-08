@@ -5,7 +5,7 @@
         <description>RDFIZER FOR Amazon</description>
         <documentationURL><!-- url for API documentation --></documentationURL>
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
-        <sampleQuery>SELECT * FROM google.books WHERE q="isbn+006251587X" AND maxResults=3 AND startIndex=2</sampleQuery>    
+        <sampleQuery></sampleQuery>    
     </meta>
     <!--GLOBAL FUNCTIONS-->
     <execute><![CDATA[  
