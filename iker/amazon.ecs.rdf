@@ -82,12 +82,14 @@ response.object = XML(results);
               <inputs>
                 <key id="offerURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
+				<key id="offerId" type="xs:string" paramType="variable" required="true"/>				
               </inputs>
             <execute><![CDATA[
 var variables = {};
 variables.isbn= isbn;
 variables.URI= offerURI;
-var qu = "select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | amazon.ecs.rdf.offer(@URI)";
+variables.offerid = offerId+"%";
+var qu = "select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' and Offers.Offer.OfferListing.OfferListingId LIKE @offerid | amazon.ecs.rdf.offer(@URI)";
 y.log(qu);
 var q = y.query(qu, variables);
 var results =q.results;
