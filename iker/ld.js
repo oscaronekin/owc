@@ -727,13 +727,12 @@ var rdftxt2= "</rdf:RDF>";
 		var instance = LD.insList[i];
 		txt +=instance.toString()+"\n";
 	}	
-	try {
+	try { 
         return new XML (rdftxt+txt+rdftxt2);
 	}
 	catch(err) {
-//y.log(txt);
-			y.log(err);
-		
+		y.log(err);
+		y.log(txt);
 		return txt;
 	}
   };
