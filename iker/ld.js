@@ -732,7 +732,7 @@ var rdftxt2= "</rdf:RDF>";
 		txt=rdftxt+txt+rdftxt2;
 		y.log(txt);
         //return new XML (rdftxt+txt+rdftxt2);
-	return rdftxt+txt+rdftxt2;
+	return txt;
 	}
 	catch(err) {
 		y.log(err);
