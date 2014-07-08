@@ -452,7 +452,7 @@ rdf = (function() {
 				//alert(this.prf[px]);
 		 	}
         }
-		
+        
     var txt2 = "<rdf:Description rdf:about='"+s+"' ";
     for (var key in this.prf) {
        if (key === 'length' || !this.prf.hasOwnProperty(key)) continue;
@@ -461,13 +461,14 @@ rdf = (function() {
     }
     txt2=txt2+">\n</rdf:Description>";  
 	var root = new XML(txt2);
-		
+		y.log(root);
 	for (var index = 0; index < arr.length; ++index) {		
 		if (t.o.interfaceName =='NamedNode'){
 			root[prop].@resource=obj;
 		}else{
 			root[prop]=obj;
 		}
+		y.log(root);
 	 }
      return root;
       };
