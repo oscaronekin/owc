@@ -90,7 +90,7 @@ itemresource.addProperty("dc:format", tuple.items.volumeInfo.printType);
 itemresource.addProperty("dc:language", tuple.items.volumeInfo.language);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
 itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.categories, encodeSubjectUri);
-
+y.log('termino');'
 //itemresource.addProperty ("scom:hasOffer",offerUri);
 response.object =LD.serialize();
             ]]>   
