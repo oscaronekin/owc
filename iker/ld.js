@@ -423,8 +423,56 @@ rdf = (function() {
         return prefix;
       };
       
-	  
       XMLRDFSerializer.prototype.serialize = function(g) {
+	     var arr = g.toArray();
+		 if (arr.length== 0 ){return "";}
+		 var t = arr[0];
+		 var s = t.s;
+		 var px=this.prefix(s); 
+		 var iri= this.environment.prefixes[px];
+		 if (px!= null && iri!= null){
+			this.prf[px]=iri;
+			//alert(this.prf[px]);
+		 }
+		 var txt = ""; //<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>\n<rdf:Description rdf:about='"+s+"'>";
+		 for (var index = 0; index < arr.length; ++index) {
+			var t=arr[index];
+			var prop=t.p.toString();			
+			var obj=t.o.toString();
+			px=this.prefix(prop);
+			iri= this.environment.prefixes[px];
+		 	if (px!= null && iri!= null){
+				this.prf[px]=iri;
+				//alert(this.prf[px]);
+		 	}
+		 	px=this.prefix(obj);
+			iri= this.environment.prefixes[px];
+		 	if (px!= null && iri!= null){
+				this.prf[px]=iri;
+				//alert(this.prf[px]);
+		 	}
+        }
+		
+    var txt2 = "<rdf:Description rdf:about='"+s+"' ";
+    for (var key in this.prf) {
+       if (key === 'length' || !this.prf.hasOwnProperty(key)) continue;
+       var value = this.prf[key];
+       txt2=txt2+"\n xmlns:"+ key+"='"+value+"'";      
+    }
+    txt2=txt2+">\n</rdf:Description>";  
+	var root = new XML(txt2);
+		
+	for (var index = 0; index < arr.length; ++index) {		
+		if (t.o.interfaceName =='NamedNode'){
+			root[prop].@resource=obj;
+		}else{
+			root[prop]=obj;
+		}
+	 }
+     return root;
+      };
+	  
+      XMLRDFSerializer.prototype.toString = function(g) {
 	     var arr = g.toArray();
 		 if (arr.length== 0 ){return "";}
 		 var t = arr[0];
