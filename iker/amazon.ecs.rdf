@@ -13,7 +13,7 @@ y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // 
 	//E4X namespace
 
 function getISBN(){
-  var begin = URI.indexOf("/book/");
+  var begin = URI.indexOf("/isbn/");
   var isbnNum=URI.substring(begin+6);
   isbnNum.replace ("/",""); 
   return isbnNum;
@@ -52,7 +52,7 @@ function encodeISBN(isbn){
 
 function offerURI(id)
 { var isbnNum=getISBN(); 
-  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/"+isbnNum+"/"+encodeOffer(id);
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/isbn/"+isbnNum+"/offerid/"+encodeOffer(id);
   return offerURI;
 } ]]>
     </execute> 
@@ -82,13 +82,13 @@ response.object = XML(results);
               <inputs>
                 <key id="offerURI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
-				<key id="offerId" type="xs:string" paramType="variable" required="true"/>				
+				<key id="offerid" type="xs:string" paramType="variable" required="true"/>				
               </inputs>
             <execute><![CDATA[
 var variables = {};
 variables.isbn= isbn;
 variables.URI= offerURI;
-variables.offerid = offerId+"%";
+variables.offerid = offerid+"%";
 var qu = "select * from amazon.ecs  where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' and Offers.Offer.OfferListing.OfferListingId LIKE @offerid | amazon.ecs.rdf.offer(@URI)";
 y.log(qu);
 var q = y.query(qu, variables);
