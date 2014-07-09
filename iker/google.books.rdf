@@ -20,8 +20,8 @@ function getISBN(){
 function encodeSubjectUri(subject){
 	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
 	return subjectUri;}
-function encodeAuthorURI(author){
-	var authorUri = "http://rdf.onekin.org/dblp.rdf/person/"+ encodeURIComponent(author);
+function encodeAmazonAuthorURI(author){
+	var authorUri = "http://rdf.onekin.org/amazon.ecs.rdf/person/"+ encodeURIComponent(author);
 	return authorUri;}
 function encodeISBN(isbn){
 	return "urn:ISBN:"+ isbn;}
@@ -61,7 +61,7 @@ itemresource.addProperty("rdf:type" ,"scom:Book");
 itemresource.addProperty("rdfs:label", tuple.items.volumeInfo, composeTitle);
 itemresource.addNameSpace("dc","http://purl.org/dc/elements/1.1/");
 itemresource.addProperty("dc:title", tuple.items.volumeInfo, composeTitle);
-itemresource.addProperty ("dc:creator", tuple.items.volumeInfo.authors, encodeAuthorURI);
+itemresource.addProperty ("dc:creator", tuple.items.volumeInfo.authors, encodeAmazonAuthorURI);
 itemresource.addProperty("dc:identifier", tuple.items.volumeInfo.industryIdentifier, encodeISBN);  
 itemresource.addProperty("dc:publisher", tuple.items.volumeInfo.publisher);
 itemresource.addProperty("dc:date", tuple.items.volumeInfo.publishedDate);
