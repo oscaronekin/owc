@@ -710,7 +710,8 @@ function RDFIZE (URI, q){
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
-	var variables = new Array();
+	var variables = {};
+	variables.URI=URI;
 	y.log(parts);
 	for (var i = jump+3;  i< parts.length; i=i+2){
 		y.log(i);
