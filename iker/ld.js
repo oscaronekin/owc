@@ -720,6 +720,7 @@ var rdftxt2= "</rdf:RDF>";
   };
  
  LD.prototype.rdfize = function (q){
+ 	y.log(URI);
 	var parts= URI.split("/");
 	var jump=2;
 	var table = parts[jump+1];
