@@ -720,6 +720,7 @@ function RDFIZE (URI, q){
 		y.log(variables[parts[i]]);
 	}
 	y.log (variables);
+	q=q..replace(";", " ");
 	var qu = q +" | "+table+"."+type+"(@URI);";
 	y.log (qu);
 	var results = y.query(qu, variables).results;
