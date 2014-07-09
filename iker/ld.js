@@ -752,7 +752,7 @@ var rdftxt2= "</rdf:RDF>";
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	var results = y.query(qu, variables).results;
+	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
  
