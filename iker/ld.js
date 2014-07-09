@@ -766,7 +766,6 @@ LD = new LD();
 function RDFIZE (URI, q){
 	var parts= URI.split("/");
 	var jump=2;
-	var host = parts[jump];
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	var variables = new Array();
