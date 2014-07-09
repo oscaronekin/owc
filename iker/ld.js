@@ -777,7 +777,7 @@ function RDFIZE (URI, q){
 	var qu = q +" | "+table+"."+type+"(@URI);";
 	y.log (qu);
 	var results = y.query(qu, variables).results;
-	response.object = return XML(results);
+	response.object = XML(results);
 };
 
 
