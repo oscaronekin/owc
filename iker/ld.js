@@ -740,6 +740,7 @@ var rdftxt2= "</rdf:RDF>";
  
     	LD.prototype.variables = {};
  	LD.prototype.addVariable = function (name, value){
+ 		y.log(name +"::"+value);
 		this.variables[name]=value;
 	};
  
