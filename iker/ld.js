@@ -680,12 +680,12 @@ var rdftxt2= "</rdf:RDF>";
         var prefix = curie.slice(0, index);
         return prefix;
       };      
- };
  
   	   
  function LD (){
    this.insList = new Array();
    this.insCount=0;
+};
    
   LD.prototype.createInstance = function (URIs){
   
@@ -754,6 +754,7 @@ var rdftxt2= "</rdf:RDF>";
 	var results = y.query(qu, variables).results;
 	response.object = XML(results);
 };
+ 
     LD.prototype.variables = {};
 	LD.prototype.addVariable = function (name, value){
 		this.variable[name]=value;
