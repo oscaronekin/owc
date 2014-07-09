@@ -7,57 +7,66 @@
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery></sampleQuery>    
     </meta>
-    <!--GLOBAL FUNCTIONS-->
-    <execute><![CDATA[  
-y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.       
-	//E4X namespace
-
+    
+    <execute><!--GLOBAL FUNCTIONS-->
+<![CDATA[  y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.       
+default xml namespace = "http://webservices.amazon.com/AWSECommerceService/2011-08-01"; //E4X namespace
 function getISBN(){
   var begin = URI.indexOf("/isbn/");
   var isbnNum=URI.substring(begin+6);
   isbnNum.replace ("/",""); 
-  return isbnNum;
-}	
-  
+  return isbnNum;}	 
 function encodeOffer(id){
   var begin = id.indexOf("%");
   if (begin> -1){
 	id=id.substring(0,begin);
   }
-  return id;
-}	
-
+  return id;}	
 function encodeSubjectUri(subject){
 	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
-	return subjectUri;
-}
-         
+	return subjectUri;}
 i= 1;
 function nextReviewURI(){
 	var reviewURI = URI.replace("/book/","/review/");
     reviewURI = reviewURI+"_EditorialReview"+i; 
 	i++;
-	return reviewURI;
-}
-
-function encodeAuthorURI(author){
+	return reviewURI;}
+function encodeDBLPAuthorURI(author){
 	var authorUri = "http://rdf.onekin.org/dblp.rdf/person/"+ encodeURIComponent(author);
-	return authorUri;
-}
-
+	return authorUri;}
+function encodeAmazonAuthorURI(author){
+	var authorUri = "http://rdf.onekin.org/amazon.ecs.rdf/person/"+ encodeURIComponent(author);
+	return authorUri;}
+function isOurPerson(author){
+	var auURI = encodeAmazonAuthorURI(author);
+	if (auURI == URI){
+		return URI;
+	}else{return null;}}
+function encodeDBLPAuthorIsOurPerson(author){
+   if (isOurPerson(author) != null){
+		return encodeDBLPAuthorURI(author);
+	}else{return null;}}
 function encodeISBN(isbn){
 	var newISBN = "urn:ISBN:"+ isbn;
-	return newISBN;
-}
-
+	return newISBN;}
 function encodeOfferURI(id)
 { var isbnNum=getISBN(); 
   var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/offer/isbn/"+isbnNum+"/offerid/"+encodeOffer(id);
-  return offerURI;
-} ]]>
+  return offerURI;}
+function encodeAmazonBookURI(id)
+{ var isbnNum=getISBN(); 
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/book/isbn/"+id;
+  return offerURI;}
+function encodeGoogleBookURI(id)
+{ var isbnNum=getISBN(); 
+  var offerURI = "http://rdf.onekin.org/google.books.rdf/book/isbn/"+id;
+  return offerURI;}
+function encodeAmazonBookURIASIN(id)
+{ var isbnNum=getISBN(); 
+  var offerURI = "http://rdf.onekin.org/amazon.ecs.rdf/book/isbn/"+id;
+  return offerURI;} ]]>
     </execute> 
-    <bindings>
-        <!--LOWERIGN SELECTS-->
+    <bindings><!--LOWERIGN SELECTS-->        
          <select itemPath="results.RDF" produces="XML"> 
               <inputs>
                 <key id="bookURI" type="xs:string" paramType="variable" required="true"/>
@@ -67,14 +76,12 @@ function encodeOfferURI(id)
 var variables = {};
 variables.isbn= isbn;
 variables.URI= bookURI;
-var qu = "select * from amazon.ecs where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' | amazon.ecs.rdf.book(@URI)";
-y.log(qu);
+var qu = "select * from amazon.ecs where ItemId=@isbn and ResponseGroup='Large' | amazon.ecs.rdf.book(@URI)";
 var q = y.query(qu, variables);
 var results =q.results;
-response.object = XML(results);
-            ]]></execute>
-        </select>
-         
+response.object = XML(results);]]>
+             </execute>
+        </select>       
          <select itemPath="results.RDF" produces="XML"> 
               <inputs>
                 <key id="offerURI" type="xs:string" paramType="variable" required="true"/>
@@ -86,15 +93,12 @@ var variables = {};
 variables.isbn= isbn;
 variables.URI= offerURI;
 variables.offerid = offerid+"%";
-var qu = "select Offers.Offer from amazon.ecs where ItemId=@isbn and AssociateTag ='123' and ResponseGroup='Large' and Offers.Offer.OfferListing.OfferListingId LIKE @offerid | amazon.ecs.rdf.offer(@URI)";
-y.log(qu);
-y.log(variables);
+var qu = "select Offers.Offer from amazon.ecs where ItemId=@isbn and ResponseGroup='Large' and Offers.Offer.OfferListing.OfferListingId LIKE @offerid | amazon.ecs.rdf.offer(@URI)";
 var q = y.query(qu, variables);
 var results =q.results;
-response.object = XML(results);
-            ]]></execute>
-        </select>        
-        
+response.object = XML(results);]]>
+             </execute>
+        </select>                
  <select itemPath="results.RDF" produces="XML"> 
               <inputs>
                 <key id="personURI" type="xs:string" paramType="variable" required="true"/>
@@ -104,16 +108,12 @@ response.object = XML(results);
 var variables = {};
 variables.author= author;
 variables.URI= personURI;
-var qu = "select * from amazon.ecs  where  Keywords=@author and AssociateTag ='123' and ResponseGroup='Large'  and ItemAttributes.Author = @author | amazon.ecs.rdf.person(@URI)";
-y.log(qu);
-y.log(variables);
+var qu = "select * from amazon.ecs  where  Keywords=@author and ResponseGroup='Large'  and ItemAttributes.Author = @author | amazon.ecs.rdf.person(@URI)";
 var q = y.query(qu, variables);
 var results =q.results;
-response.object = XML(results);
-            ]]></execute>
+response.object = XML(results);]]>
+            </execute>
         </select>        
-
-
         <!--LIFTING FUNCTIONS-->
       <function name="book" >
            <inputs>
@@ -121,7 +121,6 @@ response.object = XML(results);
                <key id="URI" paramType="variable" type="xs:string"  required="true"/>
             </inputs>    
           <execute> <![CDATA[ //RDFication
-default xml namespace = "http://webservices.amazon.com/AWSECommerceService/2011-08-01";
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("scom","http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#");
 itemresource.addProperty("rdf:type" ,"scom:Book");
@@ -138,16 +137,14 @@ itemresource.addProperty("dc:format", tuple.ItemAttributes.Format);
 itemresource.addProperty("dc:format", tuple.ItemAttributes.Binding);
 itemresource.addNameSpace("rev","http://dannyayers.com/xmlns/rev/#");
 itemresource.addProperty("rev:hasReview", tuple.EditorialReviews.EditorialReview, nextReviewURI);
-itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Author, encodeAuthorURI);
-itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Creator, encodeAuthorURI);
+itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Author, encodeDBLPAuthorURI);
+itemresource.addProperty ("dc:creator", tuple.ItemAttributes.Creator, encodeDBLPAuthorURI);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
 itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.Name, encodeSubjectUri);
 itemresource.addProperty ("scom:hasOffer", tuple.Offers.Offer.OfferListing.OfferListingId,encodeOfferURI);
-response.object =LD.serialize();
-            ]]>   
+response.object =LD.serialize();]]>   
             </execute>
-           </function>
-                
+           </function>                
       <function name="offer" >
            <inputs>
                <pipe id="tuple" paramType="variable" type="xs:string"/>
@@ -157,51 +154,31 @@ response.object =LD.serialize();
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("gr", "http://purl.org/goodrelations/v1#");
 itemresource.addProperty("rdf:type" ,"gr:Offering");
-y.log(tuple);
-y.log(tuple.Offers.Offer.OfferListing.Price);
 itemresource.addProperty("gr:hasCurrencyValue", tuple.Offers.Offer.OfferListing.Price.Amount);
 itemresource.addProperty("gr:hasCurrency", tuple.Offers.Offer.OfferListing.Price.CurrencyCode);
-response.object =LD.serialize();
-            ]]>   
+response.object =LD.serialize();]]>   
             </execute>
-           </function>        
-
-<function name="review" >
+      </function>        
+      <function name="person" >
            <inputs>
                <pipe id="tuple" paramType="variable" type="xs:string"/>
                <key id="URI" paramType="variable" type="xs:string"  required="true"/>
             </inputs>    
           <execute> <![CDATA[ //RDFication
 var itemresource = LD.createInstance(URI);
-itemresource.addNameSpace("gr", "http://purl.org/goodrelations/v1#");
-itemresource.addProperty("rdf:type" ,"gr:Offering");
-y.log(tuple);
-y.log(tuple.Offers.Offer.OfferListing.Price);
-itemresource.addProperty("gr:hasCurrencyValue", tuple.Offers.Offer.OfferListing.Price.Amount);
-itemresource.addProperty("gr:hasCurrency", tuple.Offers.Offer.OfferListing.Price.CurrencyCode);
-response.object =LD.serialize();
-            ]]>   
-            </execute>
-           </function>       
-
-<function name="person" >
-           <inputs>
-               <pipe id="tuple" paramType="variable" type="xs:string"/>
-               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
-            </inputs>    
-          <execute> <![CDATA[ //RDFication
-var itemresource = LD.createInstance(URI);
-y.log(tuple.ItemAttributes);
-y.log(tuple.Item);
-y.log(URI);
 itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
-itemresource.addProperty("foaf:name", tuple.ItemAttributes.Author);
+itemresource.addProperty("foaf:name", tuple.ItemAttributes.Author, isOurPerson);
 itemresource.addNameSpace("owl","http://www.w3.org/2002/07/owl#");
-itemresource.addProperty("owl:sameAs", tuple.ItemAttributes.Author, encodeAuthorURI);
+itemresource.addProperty("owl:sameAs", tuple.ItemAttributes.Author, encodeDBLPAuthorIsOurPerson);
+itemresource.addNameSpace("dblp","http://sw.deri.org/~aharth/2004/07/dblp/dblp.owl");
+itemresource.addProperty("dblp:Book", tuple.ItemAttributes.ISBN, encodeAmazonBookURI);
+itemresource.addProperty("dblp:Book", tuple.ItemAttributes.EISBN, encodeAmazonBookURI);
+itemresource.addProperty("dblp:Book", tuple.ItemAttributes.ISBN, encodeGoogleBookURI);
+itemresource.addProperty("dblp:Book", tuple.ItemAttributes.EISBN, encodeGoogleBookURI);
+itemresource.addProperty("dblp:Book", tuple.ASIN, encodeAmazonBookURIASIN);
 response.object =LD.serialize();
             ]]>   
             </execute>
-           </function>       
-
+      </function>       
     </bindings>
 </table>
