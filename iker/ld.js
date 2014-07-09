@@ -771,7 +771,7 @@ function RDFIZE (URI, q){
 	var type = parts[jump+2];
 	var variables = new Array();
 	for (var i = jump+3;  i< parts.length; i=i+2){
-		variables.put(parts[i],parts[i+1]);
+		variables.[parts[i]]=parts[i+1];
 	}
 	y.log (variables);
 	var qu = q +" | "+table+"."+type+"(@URI);";
