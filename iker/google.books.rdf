@@ -6,48 +6,33 @@
         <documentationURL><!-- url for API documentation --></documentationURL>
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn:006251587X"</sampleQuery>    
-    </meta>
-    <!--GLOBAL FUNCTIONS-->
-    <execute><![CDATA[  
-	y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
-
+    </meta>    
+    <execute><!--GLOBAL FUNCTIONS-->
+ <![CDATA[  y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
 function composeTitle(info){
 	var title = info.subtitle+info.title;
-	return title;
-}
-
+	return title;}
 function getISBN(){
 	var begin = URI.indexOf("/isbn/");
 	var isbnNum=URI.substring(begin+6);
 	isbnNum.replace ("/","");
-	return isbnNum;
-}
-
+	return isbnNum;}
 function encodeSubjectUri(subject){
 	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
-	return subjectUri;
-}
-
+	return subjectUri;}
 function encodeAuthorURI(author){
 	var authorUri = "http://rdf.onekin.org/dblp.rdf/person/"+ encodeURIComponent(author);
-	return authorUri;
-}
-
+	return authorUri;}
 function encodeISBN(isbn){
-	return "urn:ISBN:"+ isbn;
-}
-
+	return "urn:ISBN:"+ isbn;}
 i= 1;
 function encodeOffer()
-{ var isbnNum=getISBN();
-var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
-i++;
-return offerURI;
-} 
-]]>
+{ 	var isbnNum=getISBN();
+ 	var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
+	i++;
+	return offerURI;}]]>
     </execute> 
-    <bindings>
-        <!--LOWERIGN SELECTS-->
+    <bindings>      <!--LOWERIGN SELECTS-->
          <select itemPath="results.RDF" produces="XML"> <!--itemPath="ItemSearchResponse.Items.Item"-->
               <inputs>
                 <key id="bookURI" type="xs:string" paramType="variable" required="true"/>
@@ -58,13 +43,11 @@ var variables = {};
 variables.isbn= "isbn:"+isbn;
 variables.URI= bookURI;
 var qu =  "SELECT * FROM google.books WHERE q=@isbn | google.books.rdf.book(@URI)";
-y.log(qu);
 var q = y.query(qu, variables);
 var results =q.results;
-response.object = XML(results);
-            ]]></execute>
-        </select>
-         
+response.object = XML(results);]]>
+             </execute>
+        </select>       
         <!--LIFTING FUNCTIONS-->
       <function name="book" >
            <inputs>
@@ -89,13 +72,9 @@ itemresource.addProperty("dc:format", tuple.items.volumeInfo.printType);
 itemresource.addProperty("dc:language", tuple.items.volumeInfo.language);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
 itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.categories, encodeSubjectUri);
-y.log('termino');'
-//itemresource.addProperty ("scom:hasOffer",tuple.items.saleInfo, encodeOffer);
-response.object =LD.serialize();
-            ]]>   
+response.object =LD.serialize();]]>   
             </execute>
-           </function>        
-              
+           </function>                      
       <function name="offer" >
            <inputs>
                <pipe id="tuple" paramType="variable" type="xs:string"/>
