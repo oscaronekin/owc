@@ -748,7 +748,7 @@ var rdftxt2= "</rdf:RDF>";
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 	if (this.variables[parts[i]]!=null){
 		this.variables[parts[i]]=parts[i+1];
-	}		
+	}else{y.log(variables[parts[i]]);}		
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
