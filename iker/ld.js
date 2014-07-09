@@ -765,12 +765,12 @@ LD = new LD();
 
 function RDFIZE (URI, q){
 	var parts= URI.split("/");
-	var int jump=2;
+	var jump=2;
 	var host = parts[jump];
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	var variables = new Array();
-	for (int i = jump+3;  i< parts.length; i=i+2){
+	for (var i = jump+3;  i< parts.length; i=i+2){
 		variables.put(parts[i],parts[i+1]);
 	}
 	y.log (variables);
