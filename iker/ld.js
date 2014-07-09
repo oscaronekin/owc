@@ -47,6 +47,32 @@ rdf = (function() {
     return out
   };
   
+  rdf.BlankNode = function() {
+    return Object.defineProperties( {}, {
+      interfaceName: { writable: false, configurable : false, enumerable: true, value: 'BlankNode' },
+      nominalValue: { writable: false, configurable : false, enumerable: true, value: 'b'.concat(++rdf.BlankNode.NEXTID) },
+      valueOf: { writable: false, configurable : false, enumerable: true, value: function() {
+        return this.nominalValue;
+      }},
+      equals: { writable: true, configurable : false, enumerable: true, value: function(o) {
+        if(!o.hasOwnProperty('interfaceName')) {
+          if(typeof o == 'function' && o.constructor.name == 'RegExp')
+            return o.test(this.valueOf().toString());
+          return this.valueOf() == o;
+        }
+        return (o.interfaceName == this.interfaceName) ? this.nominalValue == o.nominalValue : false;
+      }},
+      toString: { writable: false, configurable : false, enumerable: true, value: function() {
+        return '_:'.concat(this.nominalValue);
+      }},
+      toNT: { writable: false, configurable : false, enumerable: true, value: function() {
+        return rdf.encodeString(this.toString());
+      }},
+      h: { configurable : false, enumerable: false, get: function(){return this.nominalValue} },
+    })
+  };
+  rdf.BlankNode.NEXTID = 0;
+  
   rdf.NamedNode = function(iri) {
     return Object.defineProperties( {}, {
       interfaceName: { writable: false, configurable : false, enumerable: true, value: 'NamedNode' },
@@ -200,6 +226,16 @@ rdf = (function() {
         return this;
       }}
     }).addArray(a);
+  };
+  
+  rdf.TripleAction = function(test,action) {
+    return Object.defineProperties( {}, {
+      action: { writable: true, configurable : false, enumerable: true, value: action },
+      test: { writable: true, configurable : false, enumerable: true, value: test },
+      run: { writable: false, configurable : false, enumerable: true, value: function(t,g) {
+        if(this.test(t)) this.action(t,g);
+      }}    
+    })
   };
   
   rdf.PrefixMap = function(i) {
@@ -441,6 +477,26 @@ rdf = (function() {
    this.insCount=0;
    
    
+ /* LD.prototype.createInstance = function (URI, type, ns){
+   var instance = new ins();
+   instance.URI = URI.trim();
+   instance.s = rdf.createNamedNode(URI);
+   type=type.trim();
+    if (type.indexOf(":")>-1 && ns != null){
+		var prefix = type.substring (0, type.indexOf(":"));
+		ns=ns.trim();
+		instance.addNameSpace (prefix, ns);
+	}
+   if (type !=null){
+	instance.addNameSpace ("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+	instance.addOneProperty("rdf:type", type);
+   }
+   LD.insList[LD.insCount]=instance;
+   LD.insCount++;
+   return instance;
+ };  
+ */
+   
   ins = function() {  
     this.URI;
     this.env = new rdf.RDFEnvironment;
@@ -640,7 +696,9 @@ var rdftxt2= "</rdf:RDF>";
 		return new XML (rdftxt+xml+rdftxt2);
 	}
 	catch(err) {
-		y.log(err);
+
+			y.log(err);
+		
 		return xml;
 	}
   };
@@ -672,12 +730,12 @@ var rdftxt2= "</rdf:RDF>";
 	try { 
 		txt=txt.replace(/&/g, '&amp;')
 		txt=rdftxt+txt+rdftxt2;
-		return new XML (txt);
+		response.object = XML (txt);
 	}
 	catch(err) {
 		y.log(err);
 		y.log(txt);
-		return txt;
+		response.object = txt;
 	}
   };
  
@@ -696,7 +754,6 @@ var rdftxt2= "</rdf:RDF>";
 			}
 		}
 	}else{
-		
 		var newList=func(data);
 	}
     y.log('LIST\n '+ newList);
@@ -712,22 +769,14 @@ function RDFIZE (URI, q){
 	var type = parts[jump+2];
 	var variables = {};
 	variables.URI=URI;
-	y.log(parts);
-	for (var i = jump+3;  i< parts.length; i=i+2){
-		y.log(i);
-		y.log(parts[i]);
-		variables[parts[i]]=parts[i+1];
-		y.log(variables[parts[i]]);
+	for (var i = jump+3;  i< parts.length; i=i+2){		
+		variables[parts[i]]=parts[i+1];		
 	}
-	y.log (variables);
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	y.log (qu);
 	var results = y.query(qu, variables).results;
-	y.log('llegue');
 	response.object = XML(results);
 };
-
 
 //processListElements = new processList();
 
