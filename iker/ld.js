@@ -738,9 +738,9 @@ var rdftxt2= "</rdf:RDF>";
 	response.object = XML(results);
 };
  
-    LD.prototype.variables = {};
-	LD.prototype.addVariable = function (name, value){
-		this.variable[name]=value;
+    	LD.prototype.variables = {};
+ 	LD.prototype.addVariable = function (name, value){
+		this.variables[name]=value;
 	};
  
 LD = new LD();
