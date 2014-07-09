@@ -720,9 +720,7 @@ var rdftxt2= "</rdf:RDF>";
   };
  
  LD.prototype.rdfize = function (q){
- 	y.log(URI);
-	var parts= URI.toString().split("/");
-	y.log(parts);
+ 	var parts= URI.toString().split("/");
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
@@ -734,10 +732,8 @@ var rdftxt2= "</rdf:RDF>";
 			this.variables[name]=value;
 		}
 	}
-	y.log(this.variables);
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
