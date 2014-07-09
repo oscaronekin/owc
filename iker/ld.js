@@ -746,8 +746,9 @@ var rdftxt2= "</rdf:RDF>";
 	var type = parts[jump+2];
 	this.variables.URI=URI;
 	for (var i = jump+3;  i< parts.length; i=i+2){	
-		if ()
-		this.variables[parts[i]]=parts[i+1];		
+	if (this.variables[parts[i]]!=null){
+		this.variables[parts[i]]=parts[i+1];
+	}		
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
