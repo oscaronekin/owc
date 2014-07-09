@@ -728,6 +728,7 @@ var rdftxt2= "</rdf:RDF>";
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 		var name= parts[i];
 		var value = parts[i+1];
+		y.log(name+"::"+value);
 		if (this.variables[name]!=null){
 			this.variables[name]=value;
 		}
@@ -745,7 +746,6 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
 LD = new LD();
-
 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
