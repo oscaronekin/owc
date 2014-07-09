@@ -471,12 +471,7 @@ rdf = (function() {
 		 txt = txt2+txt+"\n</rdf:Description>";
      return txt;
       };
-	   
- function LD (){
-   this.insList = new Array();
-   this.insCount=0;
-   
-   
+
  /* LD.prototype.createInstance = function (URI, type, ns){
    var instance = new ins();
    instance.URI = URI.trim();
@@ -537,39 +532,7 @@ rdf = (function() {
 	}	
 	return this;
  }
-   
-  LD.prototype.createInstance = function (URIs){
-  
-  if ( Object.prototype.toString.call(URIs) == '[object String]'){
-        return LD.createOneInstance (URIs.trim());
-	}else{if ( Object.prototype.toString.call(URIs) == '[object XML]'){
-		return LD.createOneInstance (URIs.toString().trim());
-	}else{if ( Object.prototype.toString.call(URIs) == '[object Array]'){
-		var instances = new multiIns();
-		for (var i in URIs){
-			instances.add(LD.createOneInstance (URIs[i].trim()));
-		}
-		return instances;
-	}else {if ( Object.prototype.toString.call(values) == '[object XMLList]'){
-		var instances = new multiIns();		
-		for (var i = 0; i<values.length(); i++){
-			instances.add(LD.createOneInstance (URIs[i].toString().trim()));
-		}
-		return instances;
-	}}}}
-	
- };  
- 
-   LD.prototype.createOneInstance = function (URI){
-   var instance = new ins();
-   instance.URI = URI.trim();
-   instance.s = rdf.createNamedNode(URI);
-   LD.insList[LD.insCount]=instance;
-   LD.insCount++;
-   return instance;
- };  
-
- 
+    
   ins.prototype.addProperty = function (property, values, processor){
 	if (typeof processor == 'undefined' ){
 		var processor= function (value){return value;};
@@ -719,6 +682,43 @@ var rdftxt2= "</rdf:RDF>";
       };      
  };
  
+  	   
+ function LD (){
+   this.insList = new Array();
+   this.insCount=0;
+   
+  LD.prototype.createInstance = function (URIs){
+  
+  if ( Object.prototype.toString.call(URIs) == '[object String]'){
+        return LD.createOneInstance (URIs.trim());
+	}else{if ( Object.prototype.toString.call(URIs) == '[object XML]'){
+		return LD.createOneInstance (URIs.toString().trim());
+	}else{if ( Object.prototype.toString.call(URIs) == '[object Array]'){
+		var instances = new multiIns();
+		for (var i in URIs){
+			instances.add(LD.createOneInstance (URIs[i].trim()));
+		}
+		return instances;
+	}else {if ( Object.prototype.toString.call(values) == '[object XMLList]'){
+		var instances = new multiIns();		
+		for (var i = 0; i<values.length(); i++){
+			instances.add(LD.createOneInstance (URIs[i].toString().trim()));
+		}
+		return instances;
+	}}}}
+	
+ };  
+ 
+   LD.prototype.createOneInstance = function (URI){
+   var instance = new ins();
+   instance.URI = URI.trim();
+   instance.s = rdf.createNamedNode(URI);
+   LD.insList[LD.insCount]=instance;
+   LD.insCount++;
+   return instance;
+ };  
+
+ 
   LD.prototype.serialize = function (){
 	var txt="";
 var rdftxt= "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>"
@@ -739,6 +739,29 @@ var rdftxt2= "</rdf:RDF>";
 	}
   };
  
+    LD.prototype.rdfize = function (URI, q){
+	var parts= URI.split("/");
+	var jump=2;
+	var table = parts[jump+1];
+	var type = parts[jump+2];
+	this.variables.URI=URI;
+	for (var i = jump+3;  i< parts.length; i=i+2){	
+		if ()
+		this.variables[parts[i]]=parts[i+1];		
+	}
+	q=q.replace(";", " ");
+	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
+	var results = y.query(qu, variables).results;
+	response.object = XML(results);
+};
+    LD.prototype.variables = {};
+	LD.prototype.addVariable = function (name, value){
+		this.variable[name]=value;
+	};
+ 
+LD = new LD();
+
+
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
 		var first=true;
@@ -759,24 +782,6 @@ var rdftxt2= "</rdf:RDF>";
     y.log('LIST\n '+ newList);
 	return newList;
  };  
- 
-LD = new LD();
-
-function RDFIZE (URI, q){
-	var parts= URI.split("/");
-	var jump=2;
-	var table = parts[jump+1];
-	var type = parts[jump+2];
-	var variables = {};
-	variables.URI=URI;
-	for (var i = jump+3;  i< parts.length; i=i+2){		
-		variables[parts[i]]=parts[i+1];		
-	}
-	q=q.replace(";", " ");
-	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	var results = y.query(qu, variables).results;
-	response.object = XML(results);
-};
 
 //processListElements = new processList();
 
