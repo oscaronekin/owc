@@ -725,14 +725,17 @@ var rdftxt2= "</rdf:RDF>";
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	this.variables.URI=URI;
+	y.log(this.variables);
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 		var name= parts[i];
 		var value = parts[i+1];
 		y.log(name+"::"+value);
-		if (this.variables[name]!=null){
+		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
 		}
 		y.log(this.variables[name]);
+		y.log(this.variables["URI"]);
+		
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
