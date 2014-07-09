@@ -90,7 +90,7 @@ LD.serialize();]]>
 				<key id="offerid" type="xs:string" paramType="variable" required="true"/>				
               </inputs>
             <execute><![CDATA[
-LD.addVariable.offerid = offerid+"%";
+LD.addVariable ("offerid", offerid+"%");
 LD.rdfize("select Offers.Offer from amazon.ecs where ItemId=@isbn and ResponseGroup='Large' and Offers.Offer.OfferListing.OfferListingId LIKE @offerid");]]>
              </execute>
         </select>                
