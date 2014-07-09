@@ -471,27 +471,7 @@ rdf = (function() {
 		 txt = txt2+txt+"\n</rdf:Description>";
      return txt;
       };
-
- /* LD.prototype.createInstance = function (URI, type, ns){
-   var instance = new ins();
-   instance.URI = URI.trim();
-   instance.s = rdf.createNamedNode(URI);
-   type=type.trim();
-    if (type.indexOf(":")>-1 && ns != null){
-		var prefix = type.substring (0, type.indexOf(":"));
-		ns=ns.trim();
-		instance.addNameSpace (prefix, ns);
-	}
-   if (type !=null){
-	instance.addNameSpace ("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-	instance.addOneProperty("rdf:type", type);
-   }
-   LD.insList[LD.insCount]=instance;
-   LD.insCount++;
-   return instance;
- };  
- */
-   
+  
   ins = function() {  
     this.URI;
     this.env = new rdf.RDFEnvironment;
@@ -739,16 +719,19 @@ var rdftxt2= "</rdf:RDF>";
 	}
   };
  
-    LD.prototype.rdfize = function (URI, q){
+ LD.prototype.rdfize = function (URI, q){
 	var parts= URI.split("/");
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	this.variables.URI=URI;
 	for (var i = jump+3;  i< parts.length; i=i+2){	
-	if (this.variables[parts[i]]!=null){
-		this.variables[parts[i]]=parts[i+1];
-	}else{y.log(this.variables[parts[i]]);}		
+		var name= parts[i];
+		var value = parts[i+1];
+		if (this.variables[name]!=null){
+			this.variables[name]=value;
+		}
+		y.log(this.variables[name]);
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
