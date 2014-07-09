@@ -774,7 +774,8 @@ function RDFIZE (URI, q){
 		variables.put(parts[i],parts[i+1]);
 	}
 	y.log (variables);
-	var qu = "select * from amazon.ecs where ItemId=@isbn and ResponseGroup='Large' | amazon.ecs.rdf.book(@URI);";
+	var qu = q +" | "+table+"."+type+"(@URI);";
+	y.log (qu);
 	var results = y.query(qu, variables).results;
 	response.object = return XML(results);
 };
