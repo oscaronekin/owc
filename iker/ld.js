@@ -719,23 +719,18 @@ var rdftxt2= "</rdf:RDF>";
 	}
   };
  
- LD.prototype.rdfize = function (URI, q){
+ LD.prototype.rdfize = function (q){
 	var parts= URI.split("/");
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	this.variables.URI=URI;
-	y.log(this.variables);
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 		var name= parts[i];
 		var value = parts[i+1];
-		y.log(name+"::"+value);
 		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
 		}
-		y.log(this.variables[name]);
-		y.log(this.variables["URI"]);
-		
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
@@ -749,6 +744,7 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
 LD = new LD();
+
 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
