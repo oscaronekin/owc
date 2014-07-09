@@ -9,47 +9,27 @@
     </meta>    
     <execute><!--GLOBAL FUNCTIONS-->
  <![CDATA[  y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
 function composeTitle(info){
-	var title = info.subtitle+info.title;
-	return title;}
-function getISBN(){
-	var begin = URI.indexOf("/isbn/");
-	var isbnNum=URI.substring(begin+6);
-	isbnNum.replace ("/","");
-	return isbnNum;}
-function encodeSubjectUri(subject){
-	var subjectUri = "http://dbpedia.org/resource/"+ encodeURIComponent(subject);
-	return subjectUri;}
-function encodeAmazonAuthorURI(author){
-	var authorUri = "http://rdf.onekin.org/amazon.ecs.rdf/person/"+ encodeURIComponent(author);
-	return authorUri;}
-function encodeISBN(isbn){
-	return "urn:ISBN:"+ isbn;}
-i= 1;
-function encodeOffer()
-{ 	var isbnNum=getISBN();
- 	var offerURI = "http://rdf.onekin.org/google.books.rdf/offer/isbn/"+isbnNum+"/offerid/"+i;
-	i++;
-	return offerURI;}]]>
+	var x=XML(info); 
+	return x.title.toString()+"\n"+x.subtitle.toString();}
+function reviewURI(){return URI.replace("/book/","/review/");}
+function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
+function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
+function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
     </execute> 
-    <bindings>      <!--LOWERIGN SELECTS-->
-         <select itemPath="results.RDF" produces="XML"> <!--itemPath="ItemSearchResponse.Items.Item"-->
+    <bindings>      
+         <select itemPath="results.RDF" produces="XML"> <!--LOWERIGN Book, Review, Offer-->
               <inputs>
-                <key id="bookURI" type="xs:string" paramType="variable" required="true"/>
+                <key id="URI" type="xs:string" paramType="variable" required="true"/>
                 <key id="isbn" type="xs:string" paramType="variable" required="true"/>
-                   </inputs>
+              </inputs>
             <execute><![CDATA[
-var variables = {};
-variables.isbn= "isbn:"+isbn;
-variables.URI= bookURI;
-var qu =  "SELECT * FROM google.books WHERE q=@isbn | google.books.rdf.book(@URI)";
-var q = y.query(qu, variables);
-var results =q.results;
-response.object = XML(results);]]>
+	LD.addVariable ("isbn", "isbn:"+isbn);
+    LD.rdfize("SELECT * FROM google.books WHERE q=@isbn");]]>
              </execute>
-        </select>       
-        <!--LIFTING FUNCTIONS-->
-      <function name="book" >
+        </select>       		 
+      <function name="book" ><!--LIFTING Book-->
            <inputs>
                <pipe id="tuple" paramType="variable" type="xs:string"/>
                <key id="URI" paramType="variable" type="xs:string"  required="true"/>
@@ -62,7 +42,7 @@ itemresource.addProperty("rdfs:label", tuple.items.volumeInfo, composeTitle);
 itemresource.addNameSpace("dc","http://purl.org/dc/elements/1.1/");
 itemresource.addProperty("dc:title", tuple.items.volumeInfo, composeTitle);
 itemresource.addProperty ("dc:creator", tuple.items.volumeInfo.authors, encodeAmazonAuthorURI);
-itemresource.addProperty("dc:identifier", tuple.items.volumeInfo.industryIdentifier, encodeISBN);  
+itemresource.addProperty("dc:identifier", tuple.items.volumeInfo.industryIdentifiers.identifier, encodeISBN);  
 itemresource.addProperty("dc:publisher", tuple.items.volumeInfo.publisher);
 itemresource.addProperty("dc:date", tuple.items.volumeInfo.publishedDate);
 itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
@@ -71,23 +51,39 @@ itemresource.addProperty("foaf:thumbnail", tuple.items.volumeInfo.imageLinks.sma
 itemresource.addProperty("dc:format", tuple.items.volumeInfo.printType);
 itemresource.addProperty("dc:language", tuple.items.volumeInfo.language);
 itemresource.addNameSpace("skos","http://www.w3.org/2004/02/skos/core#");
-itemresource.addProperty ("skos:subject", tuple.BrowseNodes.BrowseNode.categories, encodeSubjectUri);
-response.object =LD.serialize();]]>   
+itemresource.addProperty ("skos:subject", tuple.items.volumeInfo.categories, encodeSubjectUri);
+itemresource.addNameSpace("rev","http://dannyayers.com/xmlns/rev/#");
+itemresource.addProperty("rev:hasReview", tuple.items.searchInfo.textSnippet, reviewURI);
+itemresource.addProperty ("scom:hasOffer", tuple.items.saleInfo.retailPrice.amount,encodeOfferURI);
+LD.serialize();]]>   
             </execute>
-           </function>                      
-      <function name="offer" >
+           </function>                       
+		<function name="review" ><!--LIFTING Review-->
            <inputs>
                <pipe id="tuple" paramType="variable" type="xs:string"/>
                <key id="URI" paramType="variable" type="xs:string"  required="true"/>
             </inputs>    
           <execute> <![CDATA[ //RDFication
 var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("rev","http://dannyayers.com/xmlns/rev/#");
+itemresource.addProperty("rdf:type" ,"rev:Review");
+itemresource.addProperty("rev:rating", tuple.items.volumeInfo.averageRating);
+itemresource.addProperty("rev:text", tuple.items.searchInfo.textSnippet);
+LD.serialize();]]>   
+            </execute>
+           </function>          
+      <function name="offer" ><!--LIFTING Offer-->
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute> <![CDATA[ 
+var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("gr", "http://purl.org/goodrelations/v1#");
 itemresource.addProperty("rdf:type" ,"gr:Offering");
 itemresource.addProperty("gr:hasCurrencyValue", tuple.items.saleInfo.retailPrice.amount);
 itemresource.addProperty("gr:hasCurrency", tuple.items.saleInfo.retailPrice.currencyCode);
-response.object =LD.serialize();
-            ]]>   
+LD.serialize();]]>   
             </execute>
            </function>      
     </bindings>
