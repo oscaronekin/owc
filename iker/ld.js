@@ -762,11 +762,26 @@ var rdftxt2= "</rdf:RDF>";
  };  
  
 LD = new LD();
+
+function RDFIZE (URI, q){
+	var parts= URI.split("/");
+	var int jump=2;
+	var host = parts[jump];
+	var table = parts[jump+1];
+	var type = parts[jump+2];
+	var variables = new Array();
+	for (int i = jump+3;  i< parts.length; i=i+2){
+		variables.put(parts[i],parts[i+1]);
+	}
+	y.log (variables);
+	var qu = "select * from amazon.ecs where ItemId=@isbn and ResponseGroup='Large' | amazon.ecs.rdf.book(@URI);";
+	var results = y.query(qu, variables).results;
+	response.object = return XML(results);
+};
+
+
 //processListElements = new processList();
 
-//y.env("http://datatables.org/alltables.env"); 
-y.env("store://3KN9e5FWbSC9wFngrdxRWM"); 
- 
  //TODO
  // gestion namespace por defecto. el prefix vacio
  //diferencia entre prefix, term
