@@ -734,8 +734,10 @@ var rdftxt2= "</rdf:RDF>";
 			this.variables[name]=value;
 		}
 	}
+	y.log(this.variables);
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
+	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
