@@ -722,6 +722,7 @@ var rdftxt2= "</rdf:RDF>";
  LD.prototype.rdfize = function (q){
  	y.log(URI);
 	var parts= URI.toString().split("/");
+	y.log(parts);
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
