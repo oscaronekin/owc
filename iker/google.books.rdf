@@ -38,6 +38,8 @@ function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("scom","http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#");
 itemresource.addProperty("rdf:type" ,"scom:Book");
+itemresource.addNameSpace("owl","http://www.w3.org/2002/07/owl#");
+itemresource.addProperty("owl:sameAs", URI.replace("/google.books.rdf", "/amazon.ecs.rdf"));
 itemresource.addProperty("rdfs:label", tuple.items.volumeInfo, composeTitle);
 itemresource.addNameSpace("dc","http://purl.org/dc/elements/1.1/");
 itemresource.addProperty("dc:title", tuple.items.volumeInfo, composeTitle);
