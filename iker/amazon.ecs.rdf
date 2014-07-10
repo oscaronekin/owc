@@ -15,11 +15,10 @@ function encodeOffer(id){
   if (begin> -1){id=id.substring(0,begin);}
   return id;}	
 function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
-i= 1;
+i= 0;
 function nextReviewURI(){
-	var reviewURI = URI.replace("/book/","/review/")+"/num/"+i;
 	i++;
-	return reviewURI;}
+	return URI.replace("/book/","/review/")+"/num/"+i;}
 sourceCount=0;
 function isTheReviewSourceNum(source){
 	var number = URI.substring(URI.lastIndexOf("/")).replace(/\//g,'');
@@ -62,6 +61,8 @@ LD.rdfize("select * from amazon.ecs where ItemId=@isbn and ResponseGroup='Large'
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("scom","http://sites.wiwiss.fu-berlin.de/suhl/bizer/bookmashup/simpleCommerceVocab01.rdf#");
 itemresource.addProperty("rdf:type" ,"scom:Book");
+itemresource.addNameSpace("owl","http://www.w3.org/2002/07/owl#");
+itemresource.addProperty("owl:sameAs", URI.replace("/amazon.ecs.rdf","/google.books.rdf"));
 itemresource.addProperty("rdfs:label", tuple.ItemAttributes.Title);
 itemresource.addNameSpace("dc","http://purl.org/dc/elements/1.1/");
 itemresource.addProperty("dc:date", tuple.ItemAttributes.PublicationDate);
