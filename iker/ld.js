@@ -747,6 +747,7 @@ var rdftxt2= "</rdf:RDF>";
 LD = new LD();
 if(typeof URI == "undefined") {
     URI="";
+    y.log('defined URI variable');
 }
 
     function processList(data, func){
