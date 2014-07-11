@@ -7,8 +7,6 @@
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn:006251587X"</sampleQuery>    
     </meta> 
-	    <execute>
-    </execute> 
     <bindings><!--executor--> 
         	<select itemPath="" produces="JSON" >
 				<urls>
