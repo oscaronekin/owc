@@ -9,8 +9,8 @@
     </meta> 
 	    <execute><!--GLOBAL FUNCTIONS-->
  <![CDATA[  //y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
- y.log("1");
-function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
+ //y.log("1");
+//function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
  y.log("2");
 function composeTitle(info){
 	var x=XML(info); 
