@@ -21,8 +21,8 @@ function reviewURI(){return URI.replace("/book/","/review/");}
 function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
  y.log("5");
 function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
- */y.log("6");
-function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
+ y.log("6");
+function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}*/]]>
  y.log("7");
     </execute> 
     <bindings><!--executor--> 
