@@ -8,13 +8,14 @@
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn:006251587X"</sampleQuery>    
     </meta> 
 	    <execute><!--GLOBAL FUNCTIONS-->
- <![CDATA[  //y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
- //y.log("1");
-//function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
+ <![CDATA[  /*y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+ y.log("1");
+function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
  y.log("2");
 function composeTitle(info){
 	var x=XML(info); 
 	return x.title.toString()+"\n"+x.subtitle.toString();}
+ */
  y.log("3");
 function reviewURI(){return URI.replace("/book/","/review/");}
  y.log("4");
