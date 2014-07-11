@@ -18,7 +18,24 @@ function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encode
 function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
 function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
     </execute> 
-    <bindings>      
+    <bindings><!--executor--> 
+        	<select itemPath="" produces="JSON" >
+				<urls>
+                    <url env="all">https://www.googleapis.com/books/v1/volumes?q={q}</url>
+				</urls>
+				<inputs>
+					<key id="q" type="xs:string" paramType="path" required="true" />
+					<key id="download" type="xs:integer" paramType="query" />
+					<key id="filter" type="xs:integer" paramType="query" />
+					<key id="langRestrict" type="xs:integer" paramType="query" />
+					<key id="maxResults" type="xs:integer" paramType="query" />
+					<key id="orderBy" type="xs:integer" paramType="query" />
+					<key id="printType" type="xs:integer" paramType="query" />
+					<key id="projection" type="xs:integer" paramType="query" />
+					<key id="startIndex" type="xs:integer" paramType="query" />
+					<key id="volumeId" type="xs:integer" paramType="query" />
+				</inputs>
+			</select>
          <select itemPath="results.RDF" produces="XML"> <!--LOWERIGN Book, Review, Offer-->
               <inputs>
                 <key id="URI" type="xs:string" paramType="variable" required="true"/>
@@ -26,7 +43,7 @@ function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
               </inputs>
             <execute><![CDATA[
 	LD.addVariable ("isbn", "isbn:"+isbn);
-    LD.rdfize("SELECT * FROM google.books WHERE q=@isbn");]]>
+    LD.rdfize("SELECT * FROM google.books.rdf WHERE q=@isbn");]]>
              </execute>
         </select>       		 
       <function name="book" ><!--LIFTING Book-->
