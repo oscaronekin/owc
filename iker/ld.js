@@ -745,7 +745,9 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
 LD = new LD();
-
+if(typeof URI == "undefined") {
+    URI="";
+}
 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
