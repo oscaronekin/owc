@@ -7,6 +7,17 @@
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn:006251587X"</sampleQuery>    
     </meta>    
+    <execute><!--GLOBAL FUNCTIONS-->
+ <![CDATA[ 
+function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
+function composeTitle(info){
+	var x=XML(info); 
+	return x.title.toString()+"\n"+x.subtitle.toString();}
+function reviewURI(){return URI.replace("/book/","/review/");}
+function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
+function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
+function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
+    </execute> 
     <bindings><!--executor--> 
         	<select itemPath="" produces="JSON" >
 				<urls>
