@@ -16,9 +16,9 @@ function composeTitle(info){
 	var x=XML(info); 
 	return x.title.toString()+"\n"+x.subtitle.toString();}
  y.log("3");
-function reviewURI(){return URI.replace("/book/","/review/");}*/
+function reviewURI(){return URI.replace("/book/","/review/");}
  y.log("4");
-function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
+function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}*/
  y.log("5");
 function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
  y.log("6");
