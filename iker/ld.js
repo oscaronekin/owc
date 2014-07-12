@@ -520,19 +520,19 @@ rdf = (function() {
 	}
 	y.log("VALUES:: "+values)
 	if ( Object.prototype.toString.call(values) == '[object String]'){
-        var value=processor(values.trim());
+        var value=processor(values);//.trim());
 		this.addOneProperty(property, value);
 	}else{if ( Object.prototype.toString.call(values) == '[object XML]'){
-        var value=processor(values.toString().trim());
+        var value=processor(values);//.toString().trim());
 		this.addOneProperty(property, value);
 	}else{if ( Object.prototype.toString.call(values) == '[object Array]'){
 		for (var i in values){
-			var value = processor(values[i].trim());
+			var value = processor(values[i]);//.trim());
 			this.addOneProperty(property, value);
 		}
 	}else {if ( Object.prototype.toString.call(values) == '[object XMLList]'){
 		for (var i = 0; i<values.length(); i++){
-			var value = processor(values[i].toString().trim());
+			var value = processor(values[i]);//.toString().trim());
 			this.addOneProperty(property, value);
 		}
 	}}}}
