@@ -514,11 +514,9 @@ rdf = (function() {
  }
     
   ins.prototype.addProperty = function (property, values, processor){
-  	y.log("1");
   	if (typeof processor == 'undefined' ){
 		var processor= function (value){return value;};
 	}
-	y.log("VALUES:: "+values)
 	if ( Object.prototype.toString.call(values) == '[object String]'){
         var value=processor(values);//.trim());
 		this.addOneProperty(property, value);
