@@ -543,6 +543,7 @@ rdf = (function() {
 	var p = this.env.createNamedNode(property);
 	var o;
 	if ( Object.prototype.toString.call(value) == '[object String]'){
+			y.log("es STRING::::: "+value.toString())
 		value = value.trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
