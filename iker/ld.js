@@ -544,25 +544,6 @@ y.log("VALOR:.: "+value.toString());
   var s = this.env.createNamedNode(this.URI);   //The Subject= URI
 	var p = this.env.createNamedNode(property);
 	var o;
-	if ( Object.prototype.toString.call(value) == '[object String]'){
-			//y.log("es STRING::::: "+value.toString())
-		value = value.trim();
-		var prefix = this.prefix(value);
-		if (prefix!=null){
-			var iri= this.env.prefixes[prefix];
-			if (iri != null){
-				value= value.replace(prefix+":",iri);
-			}		
-		}	
-		if (value.indexOf("http") == 0){
-			o = this.env.createNamedNode(value);	
-		}else{
-			o=this.env.createLiteral(value);
-		}	
-		var t= this.env.createTriple(s,p,o);
-		this.g.add(t);
-	}else{if ( Object.prototype.toString.call(value) == '[object XML]'){
-		//y.log("es XML::::: "+value.toString())
 		value = value.toString().trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
@@ -578,8 +559,6 @@ y.log("VALOR:.: "+value.toString());
 		}	
 		var t= this.env.createTriple(s,p,o);
 		this.g.add(t);
-	}	
-   }
    return this;
 };
   
