@@ -539,9 +539,7 @@ rdf = (function() {
  }
  
  ins.prototype.addOneProperty = function (property, value){
-y.log(Object.prototype.toString.call(value));
-y.log("VALOR:.: "+value.toString());
-  var s = this.env.createNamedNode(this.URI);   //The Subject= URI
+    var s = this.env.createNamedNode(this.URI);   //The Subject= URI
 	var p = this.env.createNamedNode(property);
 	var o;
 		value = value.toString().trim();
