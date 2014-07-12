@@ -514,8 +514,7 @@ rdf = (function() {
  }
     
   ins.prototype.addProperty = function (property, values, processor){
-  	y.log('este es: '+values);
-	if (typeof processor == 'undefined' ){
+  	if (typeof processor == 'undefined' ){
 		var processor= function (value){return value;};
 	}
 	if ( Object.prototype.toString.call(values) == '[object String]'){
