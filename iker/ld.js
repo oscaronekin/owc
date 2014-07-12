@@ -517,6 +517,7 @@ rdf = (function() {
   	if (typeof processor == 'undefined' ){
 		var processor= function (value){return value;};
 	}
+	y.log("VALUES:: "+values)
 	if ( Object.prototype.toString.call(values) == '[object String]'){
         var value=processor(values.trim());
 		this.addOneProperty(property, value);
