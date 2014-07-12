@@ -540,11 +540,12 @@ rdf = (function() {
  
  ins.prototype.addOneProperty = function (property, value){
 y.log(Object.prototype.toString.call(value));
+y.log(value.toString();
   var s = this.env.createNamedNode(this.URI);   //The Subject= URI
 	var p = this.env.createNamedNode(property);
 	var o;
 	if ( Object.prototype.toString.call(value) == '[object String]'){
-			y.log("es STRING::::: "+value.toString())
+			//y.log("es STRING::::: "+value.toString())
 		value = value.trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
@@ -561,7 +562,7 @@ y.log(Object.prototype.toString.call(value));
 		var t= this.env.createTriple(s,p,o);
 		this.g.add(t);
 	}else{if ( Object.prototype.toString.call(value) == '[object XML]'){
-		y.log("es XML::::: "+value.toString())
+		//y.log("es XML::::: "+value.toString())
 		value = value.toString().trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
