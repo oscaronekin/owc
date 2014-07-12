@@ -542,7 +542,7 @@ rdf = (function() {
 	var p = this.env.createNamedNode(property);
 	var o;
 	if ( Object.prototype.toString.call(value) == '[object String]'){
-		value = value.toString.trim();
+		value = value.trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
 			var iri= this.env.prefixes[prefix];
@@ -558,7 +558,7 @@ rdf = (function() {
 		var t= this.env.createTriple(s,p,o);
 		this.g.add(t);
 	}else{if ( Object.prototype.toString.call(values) == '[object XML]'){
-		var value = values.toString().trim();
+		value = value.toString().trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
 			var iri= this.env.prefixes[prefix];
