@@ -559,6 +559,7 @@ rdf = (function() {
 		var t= this.env.createTriple(s,p,o);
 		this.g.add(t);
 	}else{if ( Object.prototype.toString.call(value) == '[object XML]'){
+		y.log("es XML::::: "+value.toString())
 		value = value.toString().trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
