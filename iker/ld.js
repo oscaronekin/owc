@@ -514,18 +514,19 @@ rdf = (function() {
  }
     
   ins.prototype.addProperty = function (property, values, processor){
+  	y.log(values);
 	if (typeof processor == 'undefined' ){
 		var processor= function (value){return value;};
 	}
 	if ( Object.prototype.toString.call(values) == '[object String]'){
-        var value=processor(values.trim());
+        var value=processor(values);//.trim());
 		this.addOneProperty(property, value);
 	}else{if ( Object.prototype.toString.call(values) == '[object XML]'){
         var value=processor(values);//.toString().trim());
 		this.addOneProperty(property, value);
 	}else{if ( Object.prototype.toString.call(values) == '[object Array]'){
 		for (var i in values){
-			var value = processor(values[i].trim());
+			var value = processor(values[i]);//.trim());
 			this.addOneProperty(property, value);
 		}
 	}else {if ( Object.prototype.toString.call(values) == '[object XMLList]'){
