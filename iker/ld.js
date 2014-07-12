@@ -537,12 +537,12 @@ rdf = (function() {
 	return this;
  }
  
- ins.prototype.addOneProperty = function (property, values){
+ ins.prototype.addOneProperty = function (property, value){
   var s = this.env.createNamedNode(this.URI);   //The Subject= URI
 	var p = this.env.createNamedNode(property);
 	var o;
-	if ( Object.prototype.toString.call(values) == '[object String]'){
-		var value = values.trim();
+	if ( Object.prototype.toString.call(value) == '[object String]'){
+		value = value.toString.trim();
 		var prefix = this.prefix(value);
 		if (prefix!=null){
 			var iri= this.env.prefixes[prefix];
