@@ -706,11 +706,25 @@ var rdftxt2= "</rdf:RDF>";
 	var table = parts[jump+1];
 	var type = parts[jump+2];
 	this.variables.URI=URI;
+	var noq=false;
+	var noqfirst=true;
+	if (q == null){
+		noq=true;
+ 		q= 'SELECT * FROM '+table.toString();
+ 	}
+ 	
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 		var name= parts[i];
 		var value = parts[i+1];
 		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
+			if(noq && noqfirst){
+				noqfirst=false;
+				q= q + ' WHERE ';
+			}
+			if (noq){
+				q = q + ' @'+name+'='+name;
+			}
 		}
 	}
 	q=q.replace(";", " ");
