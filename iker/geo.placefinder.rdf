@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>Geo Place Finder++</description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>select * from geo.placefinder.rdf where location='San Sebastian, Spain' 
+            and URI="http://rdf.onekin.org/geo.placefinder.rdf/feature/location/San Sebastian, Spain"
+        </sampleQuery>    
+    </meta>  
+    <execute> 
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+function name(t){
+	if (t.city != ''){return t.city;}
+	if (t.county!=''){return t.county;}
+	if (t.state!=''){return t.state;}
+	if (t.country!=''){return t.country;}
+}
+    </execute>
+    <bindings>
+         <select itemPath="results.RDF" produces="XML"> <!--LOWERIGN Feature-->
+              <inputs>
+                <key id="URI" type="xs:string" paramType="variable" required="true"/>                
+                <key id="location" type="xs:string" paramType="variable" required="true"/>
+              </inputs>
+            <execute><![CDATA[
+    LD.rdfize("select * from geo.placefinder(1) where text=@location");]]>
+             </execute>
+        </select>       		 
+      <function name="feature" ><!--LIFTING Feature-->
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute> <![CDATA[ //RDFication
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("geonames","http://www.geonames.org/ontology#");
+itemresource.addProperty("rdf:type" ,"geonames:Feature");
+itemresource.addProperty("geonames:name", tuple, name);
+itemresource.addProperty("geonames:countryCode", tuple.countrycode);
+itemresource.addProperty("geonames:postalCode", tuple.uzip);
+itemresource.addProperty("geonames:postalCode", tuple.postal);
+itemresource.addNameSpace("wgs84", "http://www.w3.org/2003/01/geo/wgs84_pos#");
+itemresource.addProperty("wgs84:lat", tuple.latitude);
+itemresource.addProperty("wgs84:long", tuple.longitude);
+LD.serialize();]]>   
+            </execute>
+           </function>    
+    </bindings>
+</table>
