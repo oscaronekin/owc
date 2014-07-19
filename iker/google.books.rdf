@@ -6,24 +6,28 @@
         <documentationURL><!-- url for API documentation --></documentationURL>
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>SELECT * FROM google.books WHERE q="isbn:006251587X"</sampleQuery>    
-    </meta> 
+    </meta>    
+    <execute><!--GLOBAL FUNCTIONS-->
+ <![CDATA[  y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+function encodeOfferURI(id){return URI.replace("/book/","/offer/");}
+function composeTitle(info){
+	var x=XML(info); 
+	return x.title.toString()+"\n"+x.subtitle.toString();}
+function reviewURI(){return URI.replace("/book/","/review/");}
+function encodeSubjectUri(subject){return "http://dbpedia.org/resource/"+ encodeURIComponent(subject);}
+function encodeAmazonAuthorURI(author){return "http://rdf.onekin.org/amazon.ecs.rdf/person/author/"+ encodeURIComponent(author);}
+function encodeISBN(isbn){return "urn:ISBN:"+ isbn;}]]>
+    </execute> 
     <bindings><!--executor--> 
         	<select itemPath="" produces="JSON" >
-				<urls>
-                    <url env="all">https://www.googleapis.com/books/v1/volumes?q={q}</url>
-				</urls>
 				<inputs>
-					<key id="q" type="xs:string" paramType="path" required="true" />
-					<key id="download" type="xs:integer" paramType="query" />
-					<key id="filter" type="xs:integer" paramType="query" />
-					<key id="langRestrict" type="xs:integer" paramType="query" />
-					<key id="maxResults" type="xs:integer" paramType="query" />
-					<key id="orderBy" type="xs:integer" paramType="query" />
-					<key id="printType" type="xs:integer" paramType="query" />
-					<key id="projection" type="xs:integer" paramType="query" />
-					<key id="startIndex" type="xs:integer" paramType="query" />
-					<key id="volumeId" type="xs:integer" paramType="query" />
+					<key id="q" type="xs:string" paramType="variable" required="true" />
 				</inputs>
+                <execute>
+var qu = "https://www.googleapis.com/books/v1/volumes?q="+q;
+var ret = y.rest(qu).get().response; 
+response.object = ret; 
+                </execute>
 			</select>
          <select itemPath="results.RDF" produces="XML"> <!--LOWERIGN Book, Review, Offer-->
               <inputs>
