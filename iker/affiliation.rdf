@@ -82,9 +82,11 @@ var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("schema","http://schema.org/");
 itemresource.addProperty("rdf:type" ,"schema:Organization");
 itemresource.addProperty("schema:location", "http://rdf.onekin.org/travelmath.geo.rdf/spacialthing/institution/"+tuple.institution);
+itemresource.addProperty("schema:name", tuple.institution);
+//itemresource.addProperty("schema:description", tuple.institution);
+itemresource.addProperty("schema:member", http://rdf.onekin.org/dblp.rdf/person/name/"+firstname+" "+lastname);
 LD.serialize();  ]]>
                 </execute>
-			</function>
-        
+         </function>
        </bindings>
 </table>
