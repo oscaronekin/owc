@@ -43,6 +43,7 @@ var data = myRequest.get().response;
                 <key id="name" type="xs:string" paramType="variable" required="true"/>
               </inputs>
             <execute><![CDATA[
+	name= decodeURIComponent(name);
 	LD.addVariable ("query", "ce:author:"+name.toLowerCase().split(' ').join('_'));
     LD.rdfize("SELECT * FROM dblp.rdf WHERE q=@query and info.type='inproceedings'");]]>
              </execute>
