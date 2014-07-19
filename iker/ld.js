@@ -723,12 +723,13 @@ var rdftxt2= "</rdf:RDF>";
 				q= q + ' WHERE ';
 			}
 			if (noq){
-				q = q +name+'= @'+name;
+				q = q +' ' +name+'= @'+name;
 			}
 		}
 	}
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
+	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
