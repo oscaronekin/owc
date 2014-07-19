@@ -80,7 +80,7 @@ LD.rdfize();]]>
 y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
 function encodePersonURI(uri){
 	uri2= uri.replace("http://rdf.onekin.org/affiliation.rdf/organization/firstname/","http://rdf.onekin.org/dblp.rdf/person/name/");
-	uri2= uri2.replace("/lastname/"," ");
+	uri2= uri2.replace("/lastname/","%20");
 	return uri2;}
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("schema","http://schema.org/");
