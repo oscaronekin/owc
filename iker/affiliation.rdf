@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>Given a user this table returns its affiliation</description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>
+            select * from affiliation.rdf where firstname='iker' and lastname='azpeitia'
+        </sampleQuery>       
+        <sampleQuery>
+        	select * from affiliation.rdf where firstname='iker' and lastname='azpeitia' 
+            and URI="http://rdf.onekin.org/affiliation.rdf/organization/firstname/iker/lastname/azpeitia"
+		</sampleQuery>    
+    </meta>    
+    <bindings><!--executor--> 
+                 <select itemPath="" produces="XML" > <!-- Lowering for Organization. -->
+				<inputs>
+                    <key id="firstname" type="xs:string" paramType="variable" required="true" />
+					<key id="lastname" type="xs:string" paramType="variable" required="true" />
+					</inputs>
+                <execute><![CDATA[
+//use 'store://WXfKaswMLcLBjUbXwgAGmK' as t; select * from t where firstname='iker' and lastname='azpeitia'
+function researchid(){
+	var variables={};
+ //variables.xp='html/body/form/table/tr/td/div/table/tr/td/div/table/tr/td/table/tbody/tr/td[@class="summary_data"][2]/p/text()';
+ variables.xp='html//td[@class="summary_data"][2]/p/text()';
+	variables.url='http://www.researcherid.com/ProfileSearch.action?returnCode=ROUTER.Unauthorized&criteria.firstName='+firstname+'&SrcApp=CR&criteria.lastName='+lastname+'&Init=Yes';
+	var q="select * from html where url=@url and xpath=@xp";
+	var ret= y.query(q, variables).results;              
+	var institution=ret.toString();
+	pos2= institution.indexOf(",");
+	if(pos2==-1){return institution.trim();}
+	institution= institution.substring(0, pos2);
+	return institution.trim();}
+function scholargoogle(){
+	var name = firstname+'+'+lastname;
+	name = name.replace(/ /g,'+');
+	var variables={};
+	variables.xp="html/body"; 
+	variables.url='http://scholar.google.es/citations?hl=es&view_op=search_authors&mauthors='+name;
+	var q="select * from html where url=@url and xpath=@xp";
+	var ret= y.query(q, variables).results;              
+	var txt=ret.toString();
+	name = name.replace(/\+/g,' ');
+	var pos= txt.lastIndexOf(name);
+	var uni= txt.substring(pos, txt.lenght);
+	var pos2= uni.indexOf(", ");
+	var uni= uni.substring(pos2+2, uni.length);
+	pos2= uni.indexOf("&");
+	var institution= uni.substring(0, pos2).trim();
+	return institution;}
+var institution = researchid();
+if (institution == ""){institution = scholargoogle();}
+response.object = <affiliation>
+     				<firstname>{firstname}</firstname>
+					<lastname>{lastname}</lastname>
+					<institution>{institution}</institution>
+				</affiliation>
+ ]]>
+                </execute>
+			</select>        
+        	<select itemPath="" produces="XML" > <!-- Lifting organization. -->
+				<inputs>
+                    <key id="URI" type="xs:string" paramType="variable" required="true" />					
+                    <key id="firstname" type="xs:string" paramType="variable" required="true" />
+					<key id="lastname" type="xs:string" paramType="variable" required="true" />
+					</inputs>
+                <execute><![CDATA[
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+LD.rdfize();]]>
+                </execute>
+			</select>
+         <function name="organization" ><!--LIFTING Organization-->
+             	<inputs>
+                    <pipe id="tuple" paramType="variable" type="xs:string"/>
+               		<key id="URI" paramType="variable" type="xs:string"  required="true"/>
+           		</inputs>
+                <execute><![CDATA[  //RDFication
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("schema","http://schema.org/");
+itemresource.addProperty("rdf:type" ,"schema:Organization");
+itemresource.addProperty("schema:location", "http://rdf.onekin.org/travelmath.rdf/spacialthing/institution/"+tuple.institution);
+LD.serialize();  ]]>
+                </execute>
+			</function>
+        
+       </bindings>
+</table>
