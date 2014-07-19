@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>Given a user this table returns its affiliation</description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery> 
+            select * from travelmath.geo.rdf 
+            where institution="University of the Basque Country" 
+            and URI="http://rdf.onekin.org/travelmath.geo.rdf/spatialthing/institution/University of the Basque Country"
+        </sampleQuery>    
+    </meta>    
+    <bindings><!--executor--> 
+                 <select itemPath="" produces="XML" > <!-- Lowering and Lifting for ConferenceEvent. -->
+				<inputs>
+                    <key id="URI" type="xs:string" paramType="variable" required="true" />
+                    <key id="institution" type="xs:string" paramType="variable" required="true" />
+				</inputs>
+                <execute><![CDATA[
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+var name = institution.replace(/ /g,'+');
+var variables={};
+variables.xp='/html/body//div[@class="leftcolumn4"]/p'; 
+variables.url='http://www.travelmath.com/lat-long/'+name;
+var q="select * from html where url=@url and xpath=@xp";
+var ret= y.query(q, variables).results;              
+var txt=ret.toString();
+
+var pos= txt.lastIndexOf("Latitude:</strong>")+ "Latitude:</strong>".length;
+var location= txt.substring(pos, txt.lenght);
+var pos2= location.indexOf("<br/>");
+var latitude = location.substring (0, pos2).trim();
+
+pos= txt.lastIndexOf("Longitude:</strong>")+ "Longitude:</strong>".length;
+var location= txt.substring(pos, txt.lenght);
+pos2= location.indexOf("<br/>");
+var longitud = location.substring (0, pos2).trim();
+           //RDFication
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("wgs_84","http://www.w3.org/2003/01/geo/wgs84_pos#");
+itemresource.addProperty("rdf:type" ,"wgs_84:SpatialThing");
+itemresource.addProperty("wgs_84:latitude", latitude);
+itemresource.addProperty("wgs_84:longitude", longitud);
+LD.serialize();
+]]>
+                </execute>
+			</select>        
+       </bindings>
+</table>
