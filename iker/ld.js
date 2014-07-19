@@ -723,7 +723,7 @@ var rdftxt2= "</rdf:RDF>";
 				q= q + ' WHERE ';
 			}
 			if (noq){
-				q = q + ' @'+name+'='+name;
+				q = q +name+'= @'+name;
 			}
 		}
 	}
