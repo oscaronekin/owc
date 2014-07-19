@@ -719,12 +719,12 @@ var rdftxt2= "</rdf:RDF>";
 		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
 			if(noq && noqfirst){
-				noqfirst=false;
-				q= q + ' WHERE ';
+				q= q + ' WHERE '+name+'= @'+name;
 			}
-			if (noq){
-				q = q +' ' +name+'= @'+name;
+			if (noq && !noqfirst){
+				q = q +' AND ' +name+'= @'+name;
 			}
+			noqfirst=false;
 		}
 	}
 	q=q.replace(";", " ");
