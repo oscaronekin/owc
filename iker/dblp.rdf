@@ -56,7 +56,7 @@ var data = myRequest.get().response;
 function encodeAffiliationURI(uri){
 	var n = decodeName(uri);
 	var n2 = n.split(" ");
-    return 'http://rdf.onekin.org/affiliation.rdf/organization/firstname/'+n2[0]+'lastname/'+n2[1];}
+    return 'http://rdf.onekin.org/affiliation.rdf/organization/firstname/'+n2[0]+'/lastname/'+n2[1];}
 function encodePublication(paper){
 	paper = encodeURIComponent(paper.substr('http://www.dblp.org/rec/bibtex/'.length));
 	return "http://rdf.onekin.org/dblp.rdf/article/"+paper;}
