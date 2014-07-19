@@ -81,7 +81,7 @@ y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // 
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("schema","http://schema.org/");
 itemresource.addProperty("rdf:type" ,"schema:Organization");
-itemresource.addProperty("schema:location", "http://rdf.onekin.org/travelmath.rdf/spacialthing/institution/"+tuple.institution);
+itemresource.addProperty("schema:location", "http://rdf.onekin.org/travelmath.geo.rdf/spacialthing/institution/"+tuple.institution);
 LD.serialize();  ]]>
                 </execute>
 			</function>
