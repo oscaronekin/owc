@@ -59,7 +59,7 @@ function encodeAffiliationURI(uri){
     return 'http://rdf.onekin.org/affiliation.rdf/organization/firstname/'+n2[0]+'/lastname/'+n2[1];}
 function encodePublication(paper){
 	paper = encodeURIComponent(paper.substr('http://www.dblp.org/rec/bibtex/'.length));
-	return "http://rdf.onekin.org/dblp.rdf/article/"+paper;}
+	return "http://rdf.onekin.org/dblp.rdf/article/paper/"+paper;}
 function decodeName(name){return name.substr('http://rdf.onekin.org/dblp.rdf/person/name/'.length);} 
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
