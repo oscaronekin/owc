@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>GOOGLE.BOOKS</description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>
+            select * from wikicfp.rdf where conf='www 2015' 
+            and URI="http://rdf.onekin.org/wikicfp.rdf/conferenceevent/conf/www"
+        </sampleQuery>    
+    </meta>    
+    <bindings><!--executor--> 
+        	<select itemPath="" produces="XML" > <!-- Lowering and Liftign for ConferenceEvent. -->
+				<inputs>
+                    <key id="URI" type="xs:string" paramType="variable" required="true"/>                
+					<key id="conf" type="xs:string" paramType="variable" required="true" />
+				</inputs>
+                <execute><![CDATA[
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+var tokens = conf.split(" ");
+var year = tokens[tokens.length-1];
+var conflike = conf;
+var confacronym=conf;
+if (isNaN(year)){
+     year="a";
+}else{
+     conf= conf.replace(" "+year, "");
+     conflike = conf+" %";
+}   
+conf=encodeURIComponent(conf);
+var variables={};
+variables.conflike = conflike;
+variables.xp="html/body/div[@class='contsec']/table/tr/td/table/tr[@bgcolor='#F6F6F6'][1]"; 
+variables.url='http://www.wikicfp.com/cfp/servlet/tool.search?q='+conf+'&year='+year; 
+var q="select * from html where url=@url and xpath=@xp and td.a like @conflike";
+var ret= y.query(q, variables).results;   
+var confurl= "http://www.wikicfp.com"+ ret.tr.td.a.@href;
+var conftitle= ret.tr.td.p;  
+response.object = ret; 
+variables.xp="html/body/div/center//table/tr/td/table/tr/td/table/tr/td/table/tr/td[@align='center']"; 
+variables.url= confurl; 
+q="select * from html where url=@url and xpath=@xp";
+ret= y.query(q, variables).results;                     
+                     //RDFication
+var itemresource = LD.createInstance(URI);
+itemresource.addNameSpace("swc","http://data.semanticweb.org/ns/swc#");
+itemresource.addProperty("rdf:type" ,"swc:ConferenceEvent");
+itemresource.addProperty("swc:hasLocation", "http://rdf.onekin.org/geo.placefinder.rdf/feature/location/"+ret.td.p[1]);
+itemresource.addNameSpace("cfp","http://sw.deri.org/2005/08/conf/cfp#");
+itemresource.addProperty("cfp:deadline",ret.td.span.span);
+itemresource.addProperty("swc:details", conftitle + "\n" + confacronym +"\nWiki CFP web: "+confurl);
+LD.serialize();]]>
+                </execute>
+			</select>
+    </bindings>
+</table>
