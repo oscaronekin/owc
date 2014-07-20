@@ -615,14 +615,11 @@ rdf = (function() {
 	var xml=XMLRDF.serialize(this.g);
 var rdftxt= "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>"
 var rdftxt2= "</rdf:RDF>";
-
 	try {
 		return new XML (rdftxt+xml+rdftxt2);
 	}
 	catch(err) {
-
 			y.log(err);
-		
 		return xml;
 	}
   };
@@ -728,7 +725,7 @@ var rdftxt2= "</rdf:RDF>";
 	this.variables.URI=URI;
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	//y.log(qu);
+	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
