@@ -728,14 +728,14 @@ var rdftxt2= "</rdf:RDF>";
 	this.variables.URI=URI;
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
-	y.log(qu);
+	//y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
  
     	LD.prototype.variables = {};
  	LD.prototype.addVariable = function (name, value){
- 		y.log(name +"::"+value);
+ 		//y.log(name +"::"+value);
 		this.variables[name]=value;
 	};
  
