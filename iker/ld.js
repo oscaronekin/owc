@@ -702,25 +702,31 @@ var rdftxt2= "</rdf:RDF>";
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
+	for (var i = jump+3;  i< parts.length; i=i+2){	
+		var name= parts[i];
+		var value = parts[i+1];
+		if (typeof this.variables[name] == 'undefined'){
+			this.variables[name]=value;
+		}
+	}
+	
 	var noq=false;
 	var noqfirst=true;
 	if (q == null){
 		noq=true;
  		q= 'SELECT * FROM '+table.toString();
  	}
-	for (var i = jump+3;  i< parts.length; i=i+2){	
-		var name= parts[i];
-		var value = parts[i+1];
-		if (typeof this.variables[name] == 'undefined'){
-			this.variables[name]=value;
-			if(noq && noqfirst){
-				q= q + ' WHERE '+name+'= @'+name;
-			}
-			if (noq && !noqfirst){
-				q = q +' AND ' +name+'= @'+name;
-			}
-			noqfirst=false;
+ 	for (var key in this.variables) {
+    		if (key === 'length' || !widthRange.hasOwnProperty(key)) continue;
+    		var name = key;
+    		var value = widthRange[key];
+    		if(noq && noqfirst){
+			q= q + ' WHERE '+name+'= @'+name;
 		}
+		if (noq && !noqfirst){
+			q = q +' AND ' +name+'= @'+name;
+		}
+		noqfirst=false;
 	}
 	this.variables.URI=URI;
 	q=q.replace(";", " ");
@@ -728,7 +734,7 @@ var rdftxt2= "</rdf:RDF>";
 	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
-};
+	};
  
     	LD.prototype.variables = {};
  	LD.prototype.addVariable = function (name, value){
