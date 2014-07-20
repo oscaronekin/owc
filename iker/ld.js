@@ -717,9 +717,9 @@ var rdftxt2= "</rdf:RDF>";
  		q= 'SELECT * FROM '+table.toString();
  	}
  	for (var key in this.variables) {
-    		if (key === 'length' || !widthRange.hasOwnProperty(key)) continue;
+    		if (key === 'length' || !this.variables.hasOwnProperty(key)) continue;
     		var name = key;
-    		var value = widthRange[key];
+    		var value = this.variables[key];
     		if(noq && noqfirst){
 			q= q + ' WHERE '+name+'= @'+name;
 		}
