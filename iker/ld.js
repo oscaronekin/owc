@@ -705,14 +705,12 @@ var rdftxt2= "</rdf:RDF>";
 	var jump=2;
 	var table = parts[jump+1];
 	var type = parts[jump+2];
-	this.variables.URI=URI;
 	var noq=false;
 	var noqfirst=true;
 	if (q == null){
 		noq=true;
  		q= 'SELECT * FROM '+table.toString();
  	}
- 	
 	for (var i = jump+3;  i< parts.length; i=i+2){	
 		var name= parts[i];
 		var value = parts[i+1];
@@ -727,8 +725,10 @@ var rdftxt2= "</rdf:RDF>";
 			noqfirst=false;
 		}
 	}
+	this.variables.URI=URI;
 	q=q.replace(";", " ");
 	var qu = q.toString() +" | "+table.toString()+"."+type.toString()+"(@URI);";
+	y.log(qu);
 	var results = y.query(qu, this.variables).results;
 	response.object = XML(results);
 };
