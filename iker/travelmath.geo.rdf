@@ -7,8 +7,8 @@
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery> 
             select * from travelmath.geo.rdf 
-            where institution="University of the Basque Country" 
-            and URI="http://rdf.onekin.org/travelmath.geo.rdf/spatialthing/institution/University of the Basque Country"
+            where institution="University+of+the+Basque+Country" 
+            and URI="http://rdf.onekin.org/travelmath.geo.rdf/spatialthing/institution/University+of+the+Basque+Country"
         </sampleQuery>    
     </meta>    
     <bindings><!--executor--> 
@@ -26,22 +26,20 @@ variables.url='http://www.travelmath.com/lat-long/'+name;
 var q="select * from html where url=@url and xpath=@xp";
 var ret= y.query(q, variables).results;              
 var txt=ret.toString();
-
 var pos= txt.lastIndexOf("Latitude:</strong>")+ "Latitude:</strong>".length;
 var location= txt.substring(pos, txt.lenght);
 var pos2= location.indexOf("<br/>");
-var latitude = location.substring (0, pos2).trim();
-
+var latitude = location.substring (0, pos2-5).trim();
 pos= txt.lastIndexOf("Longitude:</strong>")+ "Longitude:</strong>".length;
-var location= txt.substring(pos, txt.lenght);
+location= txt.substring(pos, txt.lenght);
 pos2= location.indexOf("<br/>");
-var longitud = location.substring (0, pos2).trim();
+var longitud = location.substring (0, pos2-5).trim();
            //RDFication
 var itemresource = LD.createInstance(URI);
-itemresource.addNameSpace("wgs_84","http://www.w3.org/2003/01/geo/wgs84_pos#");
-itemresource.addProperty("rdf:type" ,"wgs_84:SpatialThing");
-itemresource.addProperty("wgs_84:latitude", latitude);
-itemresource.addProperty("wgs_84:longitude", longitud);
+itemresource.addNameSpace("wgs84","http://www.w3.org/2003/01/geo/wgs84_pos#");
+itemresource.addProperty("rdf:type" ,"wgs84:SpatialThing");
+itemresource.addProperty("wgs84:lat", latitude);
+itemresource.addProperty("wgs84:long", longitud);
 LD.serialize();
 ]]>
                 </execute>
