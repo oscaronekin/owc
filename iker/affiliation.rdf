@@ -23,8 +23,7 @@
 //use 'store://WXfKaswMLcLBjUbXwgAGmK' as t; select * from t where firstname='iker' and lastname='azpeitia'
 function researchid(){
 	var variables={};
- //variables.xp='html/body/form/table/tr/td/div/table/tr/td/div/table/tr/td/table/tbody/tr/td[@class="summary_data"][2]/p/text()';
- variables.xp='html//td[@class="summary_data"][2]/p/text()';
+ 	variables.xp='html//td[@class="summary_data"][2]/p/text()';
 	variables.url='http://www.researcherid.com/ProfileSearch.action?returnCode=ROUTER.Unauthorized&criteria.firstName='+firstname+'&SrcApp=CR&criteria.lastName='+lastname+'&Init=Yes';
 	var q="select * from html where url=@url and xpath=@xp";
 	var ret= y.query(q, variables).results;              
@@ -35,22 +34,26 @@ function researchid(){
 	return institution.trim();}
 function scholargoogle(){
 	var name = firstname+'+'+lastname;
-	name = name.replace(/ /g,'+');
+	name = name.replace(/\s/g,'+');
 	var variables={};
-	variables.xp="html/body"; 
-	variables.url='http://scholar.google.es/citations?hl=es&view_op=search_authors&mauthors='+name;
+ variables.xp="html/body/p/script"; 
+                   //http://scholar.google.com/citations?view_op=search_authors&mauthors=martin+gaedke&hl=en&oi=ao
+	variables.url='http://scholar.google.com/citations?view_op=search_authors&mauthors='+name+'&hl=en&oi=ao';
 	var q="select * from html where url=@url and xpath=@xp";
 	var ret= y.query(q, variables).results;              
-	var txt=ret.toString();
-	name = name.replace(/\+/g,' ');
+	var txt=ret.toString().toLowerCase();
+	name = name.replace(/\+/g,' ').toLowerCase();
 	var pos= txt.lastIndexOf(name);
 	var uni= txt.substring(pos, txt.lenght);
-	var pos2= uni.indexOf(", ");
-	var uni= uni.substring(pos2+2, uni.length);
+	var pos2= uni.indexOf("br/&gt;");
+	uni= uni.substring(pos2+7, uni.length);
 	pos2= uni.indexOf("&");
 	var institution= uni.substring(0, pos2).trim();
+	pos2= institution.indexOf(", ");
+	if (pos2>-1) institution= institution.substring(pos2+2, uni.length).trim();
+	if (name.indexOf(institution) > -1) return "Zarautz, Spain"
 	return institution;}
-var institution = researchid();
+var institution = "";//researchid();
 if (institution == ""){institution = scholargoogle();}
 response.object = <affiliation>
      				<firstname>{firstname}</firstname>
@@ -60,7 +63,7 @@ response.object = <affiliation>
  ]]>
                 </execute>
 			</select>        
-        	<select itemPath="" produces="XML" > <!-- Lifting organization. -->
+        	<select itemPath="" produces="XML" > <!-- LOWERING Organization. -->
 				<inputs>
                     <key id="URI" type="xs:string" paramType="variable" required="true" />					
                     <key id="firstname" type="xs:string" paramType="variable" required="true" />
@@ -68,6 +71,8 @@ response.object = <affiliation>
 					</inputs>
                 <execute><![CDATA[
 y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+LD.addVariable ("firstname", firstname.replace(/\+/g,' '));
+LD.addVariable ("lastname", lastname.replace(/\+/g,' '));
 LD.rdfize();]]>
                 </execute>
 			</select>
@@ -76,21 +81,22 @@ LD.rdfize();]]>
                     <pipe id="tuple" paramType="variable" type="xs:string"/>
                		<key id="URI" paramType="variable" type="xs:string"  required="true"/>
            		</inputs>
-                                <execute><![CDATA[  //RDFication
+                <execute><![CDATA[  //RDFication
 y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
 function encodePersonURI(uri){
 	uri2= uri.replace("http://rdf.onekin.org/affiliation.rdf/organization/firstname/","http://rdf.onekin.org/dblp.rdf/person/name/");
-	uri2= uri2.replace("/lastname/","%20");
+	uri2= uri2.replace("/lastname/","+");
 	return uri2;}
+function encodeLocationURI(location){return "http://rdf.onekin.org/travelmath.geo.rdf/spacialthing/institution/"+location.toString().replace(/\s/g, "+");}
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("schema","http://schema.org/");
 itemresource.addProperty("rdf:type" ,"schema:Organization");
-itemresource.addProperty("schema:location", "http://rdf.onekin.org/travelmath.geo.rdf/spacialthing/institution/"+tuple.institution);
+itemresource.addProperty("schema:location", tuple.institution, encodeLocationURI);
 itemresource.addProperty("schema:name", tuple.institution);
-//itemresource.addProperty("schema:description", tuple.institution);
+itemresource.addProperty("schema:description", tuple.institution);
 itemresource.addProperty("schema:member", URI, encodePersonURI);
 LD.serialize();  ]]>
                 </execute>
-         </function>
+			</function>        
        </bindings>
 </table>
