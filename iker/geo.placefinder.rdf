@@ -5,8 +5,8 @@
         <description>Geo Place Finder++</description>
         <documentationURL><!-- url for API documentation --></documentationURL>
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
-        <sampleQuery>select * from geo.placefinder.rdf where location='San Sebastian, Spain' 
-            and URI="http://rdf.onekin.org/geo.placefinder.rdf/feature/location/San Sebastian, Spain"
+        <sampleQuery>select * from geo.placefinder.rdf where location='San+Sebastian,+Spain' 
+            and URI="http://rdf.onekin.org/geo.placefinder.rdf/feature/location/San+Sebastian,+Spain"
         </sampleQuery>    
     </meta>  
     <execute> 
@@ -17,6 +17,9 @@ function name(t){
 	if (t.state!=''){return t.state;}
 	if (t.country!=''){return t.country;}
 }
+function postalCode (t){
+        if(typeof t.uzip != "undefined") return t.uzip;
+        if(typeof t.postal != "undefined") return t.postal;}
     </execute>
     <bindings>
          <select itemPath="results.RDF" produces="XML"> <!--LOWERIGN Feature-->
@@ -39,8 +42,7 @@ itemresource.addNameSpace("geonames","http://www.geonames.org/ontology#");
 itemresource.addProperty("rdf:type" ,"geonames:Feature");
 itemresource.addProperty("geonames:name", tuple, name);
 itemresource.addProperty("geonames:countryCode", tuple.countrycode);
-itemresource.addProperty("geonames:postalCode", tuple.uzip);
-itemresource.addProperty("geonames:postalCode", tuple.postal);
+itemresource.addProperty("geonames:postalCode", tuple, postalCode);
 itemresource.addNameSpace("wgs84", "http://www.w3.org/2003/01/geo/wgs84_pos#");
 itemresource.addProperty("wgs84:lat", tuple.latitude);
 itemresource.addProperty("wgs84:long", tuple.longitude);
