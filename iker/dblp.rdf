@@ -7,12 +7,12 @@
         <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
         <sampleQuery>
             select * from dblp.rdf 
-            where name='iker azpeitia' 
-            and URI="http://rdf.onekin.org/dblp.rdf/person/name/iker azpeitia"
+            where name='iker+azpeitia' 
+            and URI="http://rdf.onekin.org/dblp.rdf/person/name/iker+azpeitia"
         </sampleQuery>  
         <sampleQuery>
-            select * from dblp.rdf where paper='conf%2Fht%2FIturriozDA11' 
-            and URI="http://rdf.onekin.org/dblp.rdf/article/paper/conf%2Fht%2FIturriozDA1"
+            select * from dblp.rdf where paper='conf+ht+IturriozDA11' 
+            and URI="http://rdf.onekin.org/dblp.rdf/article/paper/conf+ht+IturriozDA11"
         </sampleQuery>
     </meta>   
     <execute>
@@ -43,8 +43,8 @@ var data = myRequest.get().response;
                 <key id="name" type="xs:string" paramType="variable" required="true"/>
               </inputs>
             <execute><![CDATA[
-	name= decodeURIComponent(name);
-	LD.addVariable ("query", "ce:author:"+name.toLowerCase().split(' ').join('_'));
+  	name= name.replace (/\+/g,"_").toLowerCase();
+	LD.addVariable ("query", "ce:author:"+name);
     LD.rdfize("SELECT * FROM dblp.rdf WHERE q=@query and info.type='inproceedings'");]]>
              </execute>
         </select>       		 
@@ -59,9 +59,9 @@ function encodeAffiliationURI(uri){
 	var n2 = n.split(" ");
     return 'http://rdf.onekin.org/affiliation.rdf/organization/firstname/'+n2[0]+'/lastname/'+n2[1];}
 function encodePublication(paper){
-	paper = encodeURIComponent(paper.substr('http://www.dblp.org/rec/bibtex/'.length));
-	return "http://rdf.onekin.org/dblp.rdf/article/paper/"+paper;}
-function decodeName(name){return name.substr('http://rdf.onekin.org/dblp.rdf/person/name/'.length);} 
+ paper = paper.substr('http://www.dblp.org/rec/bibtex/'.length).replace (/\//g, "+");
+ 	return "http://rdf.onekin.org/dblp.rdf/article/paper/"+paper;}
+function decodeName(name){return name.substr('http://rdf.onekin.org/dblp.rdf/person/name/'.length).replace (/\+/g," ");} 
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
 itemresource.addProperty("rdf:type" ,"foaf:Person");
@@ -78,7 +78,8 @@ LD.serialize();]]>
                 <key id="paper" type="xs:string" paramType="variable" required="true"/>
               </inputs>
             <execute><![CDATA[
-    var qu="SELECT * FROM dblp.rdf WHERE key='"+decodeURIComponent(paper)+"'";
+    LD.addVariable ("paper", paper.replace (/\+/g,"/"));
+    var qu="SELECT * FROM dblp.rdf WHERE key=@paper";
     LD.rdfize(qu);]]>
              </execute>
         </select>       		 
@@ -90,13 +91,14 @@ LD.serialize();]]>
           <execute> <![CDATA[ //RDFication
 function encodeConference(conf){
  var parts = conf.split('/');
- return "http://rdf.onekin.org/wikicfp.rdf/conferenceevent/conf/"+parts[1]+ " " + parts[2];}
+ return "http://rdf.onekin.org/wikicfp.rdf/conferenceevent/conf/"+parts[1]+ "+" + parts[2];}
 function encodeURL(url){return "http://www.dblp.org/"+url;}
+function encodeAuthorURI(name){return "http://rdf.onekin.org/dblp.rdf/person/name/"+name.toString().replace(/\s/g, "+");}
 var itemresource = LD.createInstance(URI);
 itemresource.addNameSpace("dblp","http://sw.deri.org/~aharth/2004/07/dblp/dblp.owl#");
 itemresource.addProperty("rdf:type" ,"dblp:Article");
 itemresource.addProperty("dblp:title", tuple.inproceedings.title);
-itemresource.addProperty("dblp:author", tuple.inproceedings.author);
+itemresource.addProperty("dblp:author", tuple.inproceedings.author, encodeAuthorURI);
 itemresource.addProperty("dblp:year", tuple.inproceedings.year);
 itemresource.addProperty("dblp:url", tuple.inproceedings.url, encodeURL);
 itemresource.addProperty("dblp:ee", tuple.inproceedings.ee);
