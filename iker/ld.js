@@ -745,7 +745,6 @@ var rdftxt2= "</rdf:RDF>";
  
  
  LD.prototype.callODT = function (q){
- 	var table = y.context.table;
  	for (var key in inputs) {
  		y.log('K2= '+key);
     		//if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
@@ -761,7 +760,7 @@ var rdftxt2= "</rdf:RDF>";
 	var noqfirst=true;
 	if (q == null){
 		noq=true;
- 		q= 'SELECT * FROM '+table.toString();
+ 		q= 'SELECT * FROM '+this.variables.TABLE;
  	}
  	for (var key in this.variables) {
     		if (key === 'length' || !this.variables.hasOwnProperty(key)) continue;
@@ -787,6 +786,7 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
 LD = new LD();
+LD.addVariable ("TABLE", y.context.table);
 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
