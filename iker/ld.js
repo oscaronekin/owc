@@ -749,7 +749,7 @@ var rdftxt2= "</rdf:RDF>";
  	for (var key in inputs) {
  		y.log('K1= '+key);
     		//if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
-		if (key === 'length' ) continue;
+		if (key === 'length' || key === 'session') continue;
 		var name= key;
 		var value = inputs[key];
 		y.log ('V1= '+value.toString());
