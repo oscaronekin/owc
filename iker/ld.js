@@ -752,7 +752,7 @@ var rdftxt2= "</rdf:RDF>";
 		if (key === 'length' ) continue;
 		var name= key;
 		var value = inputs[key];
-		y.log ('V= '+value);
+		y.log ('V= '+value.toString());
 		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
 		}
