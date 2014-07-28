@@ -743,6 +743,45 @@ var rdftxt2= "</rdf:RDF>";
 		this.variables[name]=value;
 	};
  
+ 
+ LD.prototype.callODT = function (q){
+ 	var table = y.context.table;
+	for (var i = jump+3;  i< y.inputs.length; i=i+2){	
+		var name= inputs[i];
+		var value = inputs[i+1];
+		if (typeof this.variables[name] == 'undefined'){
+			this.variables[name]=value;
+		}
+	}
+	var noq=false;
+	var noqfirst=true;
+	if (q == null){
+		noq=true;
+ 		q= 'SELECT * FROM '+table.toString();
+ 	}
+ 	for (var key in this.variables) {
+    		if (key === 'length' || !this.variables.hasOwnProperty(key)) continue;
+    		var name = key;
+    		var value = this.variables[key];
+    		if(noq && noqfirst){
+			q= q + ' WHERE '+name+'= @'+name;
+		}
+		if (noq && !noqfirst){
+			q = q +' AND ' +name+'= @'+name;
+		}
+		noqfirst=false;
+	}
+	y.log(q);
+	var results = y.query(q, this.variables).results;
+	response.object = XML(results);
+	};
+ 
+    	LD.prototype.variables = {};
+ 	LD.prototype.addVariable = function (name, value){
+ 		//y.log(name +"::"+value);
+		this.variables[name]=value;
+	};
+ 
 LD = new LD();
 
     function processList(data, func){
