@@ -747,12 +747,12 @@ var rdftxt2= "</rdf:RDF>";
  LD.prototype.callODT = function (q){
  	var table = y.context.table;
  	for (var key in inputs) {
- 		y.log('K1= '+key);
+ 		y.log('K2= '+key);
     		//if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
 		if (key === 'length' || key === 'session') continue;
 		var name= key;
 		var value = inputs[key];
-		y.log ('V1= '+value.toString());
+		y.log ('V2= '+value.toString());
 		if (typeof this.variables[name] == 'undefined'){
 			this.variables[name]=value;
 		}
