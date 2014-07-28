@@ -748,7 +748,8 @@ var rdftxt2= "</rdf:RDF>";
  	var table = y.context.table;
  	for (var key in inputs) {
  		y.log(key);
-    		if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
+    		//if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
+		if (key === 'length' ) continue;
 		var name= key;
 		var value = inputs[key];
 		if (typeof this.variables[name] == 'undefined'){
