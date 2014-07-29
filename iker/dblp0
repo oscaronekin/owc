@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd"
+xmlns:foaf ="http://xmlns.com/foaf/0.1/"
+xmlns:xs ="http://www.w3.org/2001/XMLSchema#"
+https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>dblp0 is an ODT accessing dblp data</description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>
+            use 'store://6H0k8pWpuWtXCHAaW9kfGo' as dblp0;
+            select * from dblp0 
+            where q='ce:author:iker_azpeitia' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://6H0k8pWpuWtXCHAaW9kfGo' as dblp0;
+            select * from dblp0 
+            where q='ce:year:2014' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://6H0k8pWpuWtXCHAaW9kfGo' as dblp0;
+            select * from dblp0 
+            where key='conf/ht/IturriozDA11' 
+        </sampleQuery>
+    </meta>   
+    <bindings>      
+        <select itemPath="result.hits.hit" produces="XML">   <!--executor-->   
+            <urls>
+                <url>http://www.dblp.org/search/api</url>
+            </urls>
+            <inputs>
+                <key id="q" type="xs:string" paramType="query" required="true"/>
+            </inputs>
+        </select>
+        <select itemPath="" produces="XML">   <!--executor--> 
+            <inputs>
+                <key id="key" type="xs:string" paramType="path" required="true"/>
+            </inputs>
+        	<execute>   
+response.object = y.rest('http://www.dblp.org/rec/bibtex/'+key+'.xml').get().response;
+      		</execute>
+        </select>
+    </bindings>
+</table>
