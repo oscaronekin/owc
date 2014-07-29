@@ -743,11 +743,11 @@ var rdftxt2= "</rdf:RDF>";
 		this.variables[name]=value;
 	};
  
-  LD.prototype.lift = function (q){
+  LD.prototype.lifting = function (q){
   	this.serialize();
   }
   
- LD.prototype.lower = function (q){
+ LD.prototype.lowering = function (q){
  	for (var key in inputs) {
  		y.log('K2= '+key);
     		//if (key === 'length' || !inputs.hasOwnProperty(key)) continue;
