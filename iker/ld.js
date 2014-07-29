@@ -743,8 +743,8 @@ var rdftxt2= "</rdf:RDF>";
 		this.variables[name]=value;
 	};
  
-  LD.prototype.lower = function (q){
-  	this.lift();
+  LD.prototype.lift = function (q){
+  	this.serialize();
   }
   
  LD.prototype.lower = function (q){
