@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd"
+xmlns:foaf ="http://xmlns.com/foaf/0.1/"
+xmlns:xs ="http://www.w3.org/2001/XMLSchema#"
+https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>
+dblp1.rdf is an ODT++ accessing dblp authors' data and exposing it as RDF/XML format.
+1 star: add  a lifting function.         
+        </description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>
+            use 'store://64SrjJl3SiPonLz5AAyxhk' as dblp1.rdf;
+            select * from dblp1.rdf 
+            where q='ce:author:iker_azpeitia' | dblp1.rdf.person ('http://rdf.onekin.org/dblp1.rdf/person/q/ce:author:iker_azpeitia')
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://64SrjJl3SiPonLz5AAyxhk' as dblp0;
+            select * from dblp0 
+            where q='ce:author:iker_azpeitia' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://64SrjJl3SiPonLz5AAyxhk' as dblp0;
+            select * from dblp0 
+            where q='ce:year:2014' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://64SrjJl3SiPonLz5AAyxhk' as dblp0;
+            select * from dblp0 
+            where key='conf/ht/IturriozDA11' 
+        </sampleQuery>
+    </meta>   
+    <bindings>      
+        <select itemPath="result.hits.hit" produces="XML">   <!--executor-->   
+            <urls>
+                <url>http://www.dblp.org/search/api</url>
+            </urls>
+            <inputs>
+                <key id="q" type="xs:string" paramType="query" required="true"/>
+            </inputs>
+        </select>
+        
+       <function name="person"><!--LIFTING Person-->
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute> <![CDATA[ //RDFication
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+function encodeAffiliationURI(uri){
+	var n = decodeName(uri);
+	var n2 = n.split(" ");
+    return 'http://rdf.onekin.org/affiliation.rdf/organization/firstname/'+n2[0]+'/lastname/'+n2[1];}
+function encodePublication(paper){
+ paper = paper.substr('http://www.dblp.org/rec/bibtex/'.length).replace (/\//g, "+");
+ 	return "http://rdf.onekin.org/dblp.rdf/article/paper/"+paper;}
+function decodeName(uri){return uri.replace('http://rdf.onekin.org/dblp1.rdf/person/q/ce:author:', '').replace (/_/g, " ");} 
+var person = LD.createInstance(URI);
+person.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
+person.addProperty("rdf:type" ,"foaf:Person");
+person.addNameSpace("schema","http://schema.org/"); /////
+person.addProperty("schema:affiliation", URI, encodeAffiliationURI);/////
+person.addProperty("foaf:made", tuple.url, encodePublication);
+person.addProperty("foaf:name", URI, decodeName);
+LD.serialize();]]>   
+            </execute>
+           </function>     
+        <select itemPath="" produces="XML">   <!--executor--> 
+            <inputs>
+                <key id="key" type="xs:string" paramType="path" required="true"/>
+            </inputs>
+        	<execute>   
+response.object = y.rest('http://www.dblp.org/rec/bibtex/'+key+'.xml').get().response;
+      		</execute>
+        </select>
+    </bindings>
+</table>
