@@ -763,7 +763,7 @@ var rdftxt2= "</rdf:RDF>";
 	var noqfirst=true;
 	if (q == null){
 		noq=true;
- 		q= 'SELECT * FROM '+this.variables.TABLE;
+ 		q= 'SELECT * FROM '+y.context.table;
  	}
  	for (var key in this.variables) {
     		if (key === 'length' || !this.variables.hasOwnProperty(key)) continue;
@@ -789,7 +789,6 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
 LD = new LD();
-LD.addVariable ("TABLE", y.context.table);
 
     function processList(data, func){
 	if ( Object.prototype.toString.call(data) == '[object XMLList]'){ 
