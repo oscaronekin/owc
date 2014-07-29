@@ -744,7 +744,7 @@ var rdftxt2= "</rdf:RDF>";
 	};
  
   LD.prototype.lower = function (q){
-  	this.serialize();
+  	this.lift();
   }
   
  LD.prototype.lower = function (q){
