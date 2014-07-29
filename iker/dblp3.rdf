@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd"
+xmlns:foaf ="http://xmlns.com/foaf/0.1/"
+xmlns:xs ="http://www.w3.org/2001/XMLSchema#"
+https="true">
+    <meta>
+        <author>IKER AZPEITIA</author>
+        <description>
+dblp3.rdf is an ODT++ accessing dblp authors' data and exposing it as RDF/XML format.
+1 star: add a lifting function to expose ODT's data as RDF/XML.         
+2 stars: add a lowering meta-select to hide ODT's "implementation" issues on the inputs. Hide API issues with a lowering layer.            
+3 stars: annotate inputs on ontologies to make interlinkage automatically. Maybe the 2 stars step should be modified.
+        </description>
+        <documentationURL><!-- url for API documentation --></documentationURL>
+        <apiKeyURL><!-- url for getting an API key if needed --></apiKeyURL>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp3.rdf;
+            select * from dblp3.rdf 
+            where fullname='iker azpeitia' | dblp3.rdf.person ('http://rdf.onekin.org/dblp2.rdf/person/fullname/iker azpeitia')
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp2.rdf;
+            select * from dblp2.rdf 
+            where fullname='iker azpeitia' | dblp2.rdf.person ('http://rdf.onekin.org/dblp2.rdf/person/fullname/iker azpeitia')
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp1.rdf;
+            select * from dblp1.rdf 
+            where q='ce:author:iker_azpeitia' | dblp1.rdf.person ('http://rdf.onekin.org/dblp1.rdf/person/q/ce:author:iker_azpeitia')
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp0;
+            select * from dblp0 
+            where q='ce:author:iker_azpeitia' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp0;
+            select * from dblp0 
+            where q='ce:year:2014' 
+        </sampleQuery>
+        <sampleQuery>
+            use 'store://wdfxXePjyxlgKC7LufLvRn' as dblp0;
+            select * from dblp0 
+            where key='conf/ht/IturriozDA11' 
+        </sampleQuery>
+    </meta>   
+    <bindings>      
+        <select itemPath="result.hits.hit" produces="XML">   <!--executor-->   
+            <urls>
+                <url>http://www.dblp.org/search/api</url>
+            </urls>
+            <inputs>
+                <key id="q" type="xs:string" paramType="query" required="true"/>
+            </inputs>
+        </select>
+        <select itemPath="results.results" produces="XML"> <!--LOWERIGN Person-->
+              <inputs>
+                <key id="fullname" type="foaf:name" xmlns:foaf ="http://xmlns.com/foaf/0.1/" paramType="variable" required="true"/>
+              </inputs>
+            <execute>                
+    y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+               var name = fullname.toLowerCase().replace(/ /g,"_");
+                y.log ("VA::"+name);
+                LD.addVariable ("q", "ce:author:"+name);
+    LD.lowering("SELECT * FROM dblp3.rdf WHERE q= @q"); //it can be an explicit SELECT call or a hidden default select. 
+    			 // Default hidden select in this case: SELECT * FROM dblp2.rdf WHERE q=@q"); 
+            </execute>
+        </select>     
+       <function name="person"><!--LIFTING Person-->
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="xs:string"  required="true"/>
+            </inputs>    
+          <execute>  //RDFication
+y.include('https://raw.githubusercontent.com/onekin/owc/master/iker/ld.js'); // LD.js.
+function decodeName(uri){return uri.replace('http://rdf.onekin.org/dblp1.rdf/person/q/ce:author:', '').replace (/_/g, " ");} 
+function decodeGivenName(uri){return decodeName(uri).split(" ")[0];} 
+function decodeFamilyName(uri){return decodeName(uri).split(" ")[1];} 
+              
+var person = LD.createInstance(URI);
+person.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
+person.addProperty("rdf:type" ,"foaf:Person");
+person.addProperty("foaf:made", tuple.url, encodePublication);
+person.addProperty("foaf:name", URI, decodeName);
+person.addProperty("foaf:givenName", URI, decodeGivenName);
+person.addProperty("foaf:familyName", URI, decodeFamilyName);
+//INTERLINKAGE
+person.addNameSpace("schema","http://schema.org/"); /////
+person.interlink("schema:affiliation", person, "affiliation.rdf/organization"); 
+LD.lifting();   
+            </execute>
+           </function>     
+        <select itemPath="" produces="XML">   <!--executor--> 
+            <inputs>
+                <key id="key" type="xs:string" paramType="path" required="true"/>
+            </inputs>
+        	<execute>   
+response.object = y.rest('http://www.dblp.org/rec/bibtex/'+key+'.xml').get().response;
+      		</execute>
+        </select>
+        
+        <select itemPath="results.RDF" produces="XML"> <!--LOWERING Article-->
+              <inputs>
+                <key id="paper" type="xs:string" paramType="variable" required="true"/>
+              </inputs>
+            <execute>
+    LD.addVariable ("paper", paper.replace (/\+/g,"/"));
+    var qu="SELECT * FROM dblp.rdf WHERE key=@paper";
+    LD.lowering(qu);
+             </execute>
+        </select>       		 
+      <function name="article" ><!--LIFTING Article-->
+           <inputs>
+               <pipe id="tuple" paramType="variable" type="xs:string"/>
+               <key id="URI" paramType="variable" type="dblp:Article" required="true"  xmlns:dblp ="http://sw.deri.org/~aharth/2004/07/dblp/dblp.owl#"/>
+            </inputs>    
+          <execute> //RDFication
+function encodeConference(conf){
+ var parts = conf.split('/');
+ return "http://rdf.onekin.org/wikicfp.rdf/conferenceevent/conf/"+parts[1]+ "+" + parts[2];}
+function encodeURL(url){return "http://www.dblp.org/"+url;}
+var article = LD.createInstance(URI);
+article.addNameSpace("dblp","http://sw.deri.org/~aharth/2004/07/dblp/dblp.owl#");
+article.addProperty("rdf:type" ,"dblp:Article");
+article.addProperty("dblp:title", tuple.inproceedings.title);
+article.addProperty("dblp:year", tuple.inproceedings.year);
+article.addProperty("dblp:url", tuple.inproceedings.url, encodeURL);
+article.addProperty("dblp:ee", tuple.inproceedings.ee);
+article.addProperty("dblp:booktitle", tuple.inproceedings.booktitle);
+article.addProperty("dblp:pages", tuple.inproceedings.pages);
+article.addNameSpace("swc","http://data.semanticweb.org/ns/swc#");
+article.addProperty("swc:ConferenceEvent", tuple.inproceedings.crossref, encodeConference);
+
+ ///function encodeAuthorURI(name){return "http://rdf.onekin.org/dblp.rdf/person/name/"+name.toString().replace(/\s/g, "+");}
+ ///itemresource.addProperty("dblp:author", tuple.inproceedings.author, encodeAuthorURI);
+//INTERLINKAGE
+var person = LD.createInstance("");
+person.addNameSpace("foaf","http://xmlns.com/foaf/0.1/");
+person.addProperty("foaf:name", tuple.inproceedings.author);
+article.interlink("dblp:author", person, "dblp3.rdf/person");
+LD.lifting();   
+            </execute>
+           </function>        
+    </bindings>
+</table>
