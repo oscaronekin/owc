@@ -101,7 +101,7 @@ response.object = y.rest('http://www.dblp.org/rec/bibtex/'+key+'.xml').get().res
         
         <select itemPath="results.RDF" produces="XML"> <!--LOWERING Article-->
               <inputs>
-                <key id="paper" type="xs:string" paramType="variable" required="true"/>
+                <key id="paper" type="dcterms:id" xmlns:dcterms="http://purl.org/dc/terms/" paramType="variable" required="true"/>
               </inputs>
             <execute>
     LD.addVariable ("paper", paper.replace (/\+/g,"/"));
