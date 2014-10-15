@@ -34,7 +34,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 (function() {
-
+y.log ('buuuuuu');
 // determine if in-browser or using node.js
 var _nodejs = (
   typeof process !== 'undefined' && process.versions && process.versions.node);
