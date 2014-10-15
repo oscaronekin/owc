@@ -49,8 +49,8 @@ if(_browser) {
     } else if(typeof $ !== 'undefined') {
       global = $;
     }
-  }*/
-}
+  }
+}*/
 
 // attaches jsonld API to the given object
 var wrapper = function(jsonld) {
